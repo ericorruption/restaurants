@@ -1,11 +1,5 @@
-import React from "react";
-import ReactDOM from "react-dom";
+// Had to create this file and top-level public folder to benefit
+// from create-react-app instead of setting up webpack & dependencies.
+import { main } from "./0.bin/client";
 
-import { App } from "./3.infrastructure/web/user-interface/App";
-
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById("root")
-);
+main();
