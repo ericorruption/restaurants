@@ -1,4 +1,10 @@
 {
+  "ts-node": {
+    "transpileOnly": true,
+    "compilerOptions": {
+      "module": "CommonJS",
+    }
+  },
   "compilerOptions": {
     "target": "es5",
     "module": "esnext",
@@ -18,7 +24,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "exactOptionalPropertyTypes": true,
+    "importsNotUsedAsValues": "error"
   },
   "include": [
     "src"
