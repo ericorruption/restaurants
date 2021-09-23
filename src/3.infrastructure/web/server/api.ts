@@ -12,7 +12,7 @@ api.use(express.json());
 api.use(express.urlencoded({ extended: false }));
 api.use(cookieParser());
 
-api.use("/", restaurantsRouter);
+api.use("/restaurants", restaurantsRouter);
 
 // catch 404 and forward to error handler
 api.use(function (_, __, next) {
