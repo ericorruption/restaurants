@@ -1,6 +1,6 @@
-import { ListRestaurants } from "../../../../src/2.application/use-case/ListRestaurants";
+import { ListRestaurants } from "../ListRestaurants";
 
-import { MockRestaurantRepository } from "../../../MockRestaurantRepository";
+import { MockRestaurantRepository } from "./MockRestaurantRepository";
 
 test("ListRestaurants use case", async () => {
   const listRestaurants = new ListRestaurants(new MockRestaurantRepository());
