@@ -1,5 +1,5 @@
 import type { FunctionComponent } from "react";
 
-import { SignUp } from "./pages/SignUp";
+import { Main } from "./pages/Main";
 
-export const Router: FunctionComponent = () => <SignUp />;
+export const Router: FunctionComponent = () => <Main />;

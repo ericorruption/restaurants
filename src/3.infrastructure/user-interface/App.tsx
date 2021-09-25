@@ -1,17 +1,19 @@
+import { lazy, Suspense } from "react";
 import type { FunctionComponent } from "react";
 
-import { Router } from "./Router";
+import { useUser } from "./auth";
 
 import "./App.css";
-import { Header } from "./Header";
+
+const AuthenticatedApp = lazy(() => import("./AuthenticatedApp"));
+const UnauthenticatedApp = lazy(() => import("./UnauthenticatedApp"));
 
 export const App: FunctionComponent = () => {
-  // TODO load auth info from storage if any
+  const user = useUser();
 
   return (
-    <>
-      <Header />
-      <Router />
-    </>
+    <Suspense fallback={<>Loading...</>}>
+      {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+    </Suspense>
   );
 };

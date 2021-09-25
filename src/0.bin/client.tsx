@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { App } from "../3.infrastructure/web/user-interface/App";
+import { App } from "../3.infrastructure/user-interface/App";
 
 export const main = () => {
   ReactDOM.render(
