@@ -13,4 +13,8 @@ export class MockRestaurantRepository implements RestaurantRepository {
       reviews: [],
     });
   }
+
+  async persist(restaurant: Restaurant) {
+    return Promise.resolve();
+  }
 }
