@@ -1,4 +1,4 @@
-import { InMemoryAuthorizationService } from "../../../3.infrastructure/InMemoryAuthorizationService";
+import { AuthorizationService } from "../../AuthorizationService";
 import { CreateRestaurant } from "../CreateRestaurant";
 
 import { MockRestaurantRepository } from "./MockRestaurantRepository";
@@ -6,7 +6,7 @@ import { MockRestaurantRepository } from "./MockRestaurantRepository";
 test("CreateRestaurant use case", async () => {
   const createRestaurant = new CreateRestaurant(
     new MockRestaurantRepository(),
-    new InMemoryAuthorizationService()
+    new AuthorizationService()
   );
 
   expect.assertions(2);

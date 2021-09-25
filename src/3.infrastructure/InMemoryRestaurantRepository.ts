@@ -23,4 +23,12 @@ export class InMemoryRestaurantRepository implements RestaurantRepository {
 
     return restaurant;
   }
+
+  persist(restaurant: Restaurant): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+
+  delete(restaurantId: string): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
 }
