@@ -1,0 +1,7 @@
+type Query {
+  restaurants: [Restaurant!]!
+}
+
+type Restaurant {
+  id: ID!
+}

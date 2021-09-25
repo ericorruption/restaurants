@@ -1,0 +1,10 @@
+overwrite: true
+schema: "src/3.infrastructure/api/schema.graphql"
+documents: null
+generates:
+  src/3.infrastructure/api/generated.types.ts:
+    # config:
+      # contextType: ../context#Context
+    plugins:
+      - "typescript"
+      - "typescript-resolvers"
