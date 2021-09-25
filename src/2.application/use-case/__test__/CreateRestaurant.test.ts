@@ -1,6 +1,6 @@
 import { AuthorizationService } from "../../AuthorizationService";
 import { CreateRestaurant } from "../CreateRestaurant";
-
+import { ownerUser, regularUser } from "./fixtures";
 import { MockRestaurantRepository } from "./MockRestaurantRepository";
 
 test("CreateRestaurant use case", async () => {
@@ -11,21 +11,11 @@ test("CreateRestaurant use case", async () => {
 
   expect.assertions(2);
 
-  expect(
-    createRestaurant.execute({
-      user: {
-        id: "1",
-        role: "owner",
-      },
-    })
+  await expect(
+    createRestaurant.execute({ user: ownerUser })
   ).resolves.toBeUndefined();
 
-  expect(
-    createRestaurant.execute({
-      user: {
-        id: "2",
-        role: "regular",
-      },
-    })
+  await expect(
+    createRestaurant.execute({ user: regularUser })
   ).rejects.toThrowError();
 });

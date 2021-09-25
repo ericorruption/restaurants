@@ -9,7 +9,7 @@ test("ListRestaurants use case", async () => {
     new AuthorizationService()
   );
   const restaurants = await listRestaurants.execute({
-    user: { id: "userId", role: "regular" },
+    user: { id: "userId", role: "user" },
   });
   expect(restaurants).toEqual([]);
 });
