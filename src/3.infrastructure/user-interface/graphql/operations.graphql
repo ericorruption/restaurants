@@ -1,0 +1,25 @@
+mutation signUp($input: SignUpInput!) {
+  signUp(input: $input) {
+    success
+  }
+}
+
+mutation logIn($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
+    token
+  }
+}
+
+mutation createRestaurant($input: CreateRestaurantInput!) {
+  createRestaurant(input: $input) {
+    id
+    # name
+  }
+}
+
+query listRestaurants {
+  restaurants {
+    id
+    name
+  }
+}

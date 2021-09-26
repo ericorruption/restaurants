@@ -1,25 +1,28 @@
+import type { ApolloError } from "@apollo/client";
 import {
   createContext,
-  Dispatch,
-  SetStateAction,
   FunctionComponent,
   useEffect,
   useState,
   useContext,
 } from "react";
 
+import {
+  LogInMutationVariables,
+  useLogInMutation,
+} from "./graphql/generated-types-and-hooks";
+
 export type Token = string | undefined;
 
 interface IAuthContext {
-  token: Token;
-  setToken: Dispatch<SetStateAction<Token>>;
+  logIn: (input: { variables: LogInMutationVariables }) => Promise<unknown>;
+  logInError?: ApolloError;
   isLoggedIn: boolean;
   // logout: VoidFunction;
 }
 
 const AuthContext = createContext<IAuthContext>({
-  token: undefined,
-  setToken: () => undefined,
+  logIn: () => Promise.resolve(),
   isLoggedIn: false,
   // logout: () => {},
 });
@@ -42,15 +45,21 @@ export const AuthProvider: FunctionComponent = (props) => {
   //   return <FullPageSpinner />
   // }
 
+  const [logIn, { data, error }] = useLogInMutation();
+
+  useEffect(() => {
+    if (data?.login) {
+      setToken(data.login.token);
+    }
+  }, [data?.login]);
+
   // TODO move mutations here? e.g.:
-  // const login = () => {} // make a login request
-  // const register = () => {} // register the user
   // const logout = () => {} // clear the token in localStorage and the user data
   return (
     <AuthContext.Provider
       value={{
-        token,
-        setToken,
+        logIn,
+        logInError: error,
         isLoggedIn: !!token,
         // logout: () => setToken(undefined),
       }}

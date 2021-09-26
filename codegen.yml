@@ -10,3 +10,11 @@ generates:
           content: "/* eslint-disable */"
       - typescript
       - typescript-resolvers
+  src/3.infrastructure/user-interface/graphql/generated-types-and-hooks.ts:
+    documents: src/3.infrastructure/user-interface/graphql/operations.graphql
+    plugins:
+      - add:
+          content: "/* eslint-disable */"
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo

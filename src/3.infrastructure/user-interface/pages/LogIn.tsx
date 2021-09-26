@@ -1,23 +1,44 @@
-import type { FunctionComponent } from "react";
+/* eslint-disable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment */
+import type { FormEvent, FunctionComponent } from "react";
 import { Link } from "react-router-dom";
 
-export const LogIn: FunctionComponent = () => (
-  <main>
-    <h1>Log in</h1>
-    <form>
-      <fieldset>
-        <legend className="visually-hidden">Account details</legend>
+import { useAuth } from "../AuthContext";
 
-        <label htmlFor="email">Email</label>
-        <input id="email" type="email" required />
+export const LogIn: FunctionComponent = () => {
+  const { logIn, logInError } = useAuth();
 
-        <label htmlFor="password">Password</label>
-        <input id="password" type="password" required />
-      </fieldset>
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-      <button>Log in</button>
-    </form>
+    await logIn({
+      variables: {
+        email: e.currentTarget.email.value,
+        password: e.currentTarget.password.value,
+      },
+    });
+  };
 
-    <Link to="/sign-up">I don't have an account</Link>
-  </main>
-);
+  return (
+    <main>
+      <h1>Log in</h1>
+
+      {logInError && <p>{logInError.message}</p>}
+
+      <form onSubmit={handleSubmit}>
+        <fieldset>
+          <legend className="visually-hidden">Account details</legend>
+
+          <label htmlFor="email">Email</label>
+          <input id="email" type="email" required />
+
+          <label htmlFor="password">Password</label>
+          <input id="password" type="password" required />
+        </fieldset>
+
+        <button type="submit">Log in</button>
+      </form>
+
+      <Link to="/sign-up">I don't have an account</Link>
+    </main>
+  );
+};
