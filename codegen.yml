@@ -6,5 +6,7 @@ generates:
     # config:
       # contextType: ../context#Context
     plugins:
-      - "typescript"
-      - "typescript-resolvers"
+      - add:
+          content: '/* eslint-disable */'
+      - typescript
+      - typescript-resolvers
