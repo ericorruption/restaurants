@@ -1,6 +1,7 @@
 import { AuthorizationService } from "../../AuthorizationService";
 import { ListRestaurants } from "../ListRestaurants";
 
+import { regularUser } from "./fixtures";
 import { MockRestaurantRepository } from "./MockRestaurantRepository";
 
 test("ListRestaurants use case", async () => {
@@ -9,7 +10,7 @@ test("ListRestaurants use case", async () => {
     new AuthorizationService()
   );
   const restaurants = await listRestaurants.execute({
-    user: { id: "userId", role: "user" },
+    user: regularUser,
   });
   expect(restaurants).toEqual([]);
 });
