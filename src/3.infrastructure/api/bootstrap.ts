@@ -16,12 +16,10 @@ if (!JWT_SECRET) {
 }
 
 const prismaClient = new PrismaClient();
+const userRepositoryImplementation = new PrismaUserRepository(prismaClient);
 const authenticationServiceImplementation = new ConcreteAuthenticationService(
-  JWT_SECRET
-);
-const userRepositoryImplementation = new PrismaUserRepository(
-  prismaClient,
-  authenticationServiceImplementation
+  JWT_SECRET,
+  userRepositoryImplementation
 );
 
 const authorizationService = new AuthorizationService();
@@ -32,7 +30,10 @@ const restaurantRepositoryImplementation = new PrismaRestaurantRepository(
 
 export const application = new Application(
   {
-    createUser: new CreateUser(userRepositoryImplementation),
+    createUser: new CreateUser(
+      userRepositoryImplementation,
+      authenticationServiceImplementation
+    ),
     logIn: new LogIn(
       userRepositoryImplementation,
       authenticationServiceImplementation

@@ -1,13 +1,11 @@
 import type { Password } from "../1.domain/shared-kernel";
-import type { User, UserId } from "../1.domain/User";
+import type { User } from "../1.domain/User";
+
+import type { LoggedUser } from "./model/LoggedUser";
 
 export type UnencryptedPassword = Password;
 export type EncryptedPassword = Password;
 export type AccessToken = string;
-export interface DecodedAccessToken {
-  userId: UserId;
-  // role: Role;
-}
 
 export interface AuthenticationService {
   encryptPassword(password: UnencryptedPassword): Promise<EncryptedPassword>;
@@ -16,5 +14,5 @@ export interface AuthenticationService {
     user: User
   ): Promise<boolean>;
   generateAccessToken(user: User): AccessToken;
-  decodeAccessToken(accessToken: AccessToken): DecodedAccessToken;
+  getUserByToken(token: AccessToken): Promise<LoggedUser>;
 }

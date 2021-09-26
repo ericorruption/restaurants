@@ -1,17 +1,25 @@
-import type { PrismaClient, Role as DbRole } from "@prisma/client";
+import type {
+  PrismaClient,
+  Role as DbRole,
+  User as DbUser,
+} from "@prisma/client";
 
 import type { Email } from "../1.domain/shared-kernel";
 import type { Role, User } from "../1.domain/User";
-import type { AuthenticationService } from "../2.application/AuthenticationService";
 import type { UserRepository } from "../2.application/UserRepository";
 
 export class PrismaUserRepository implements UserRepository {
-  constructor(
-    private readonly prisma: PrismaClient,
-    private readonly authenticationService: AuthenticationService
-  ) {}
-  findById(userId: string): Promise<User> {
-    throw new Error("Method not implemented.");
+  constructor(private readonly prisma: PrismaClient) {}
+  async findById(userId: string): Promise<User> {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    return this.toDomainUser(user);
   }
 
   async findByEmail(email: Email): Promise<User> {
@@ -23,19 +31,20 @@ export class PrismaUserRepository implements UserRepository {
       throw new Error("User not found");
     }
 
-    return {
-      ...user,
-      name: user.name ?? undefined,
-      role: user.role.toLowerCase() as Role,
-    };
+    return this.toDomainUser(user);
   }
 
   async persist(user: User): Promise<void> {
-    const password = await this.authenticationService.encryptPassword(
-      user.password
-    );
     await this.prisma.user.create({
-      data: { ...user, password, role: user.role.toUpperCase() as DbRole },
+      data: { ...user, role: user.role.toUpperCase() as DbRole },
     });
+  }
+
+  private toDomainUser(input: DbUser): User {
+    return {
+      ...input,
+      name: input.name ?? undefined,
+      role: input.role.toLowerCase() as Role,
+    };
   }
 }

@@ -1,5 +1,6 @@
 import type { Email, Password } from "../../../1.domain/shared-kernel";
 import { createUser, Role } from "../../../1.domain/User";
+import type { AuthenticationService } from "../../AuthenticationService";
 import type { UserRepository } from "../../UserRepository";
 import type { UseCase } from "../UseCase";
 
@@ -11,7 +12,10 @@ export interface Input {
 }
 
 export class CreateUser implements UseCase {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly authenticationService: AuthenticationService
+  ) {}
 
   async execute(input: Input): Promise<void> {
     try {
@@ -22,7 +26,11 @@ export class CreateUser implements UseCase {
       }
     } catch (e) {
       if (e instanceof Error && e.message === "User not found") {
-        const newUser = createUser(input);
+        const password = await this.authenticationService.encryptPassword(
+          input.password
+        );
+
+        const newUser = createUser({ ...input, password });
 
         // TODO validate email
 

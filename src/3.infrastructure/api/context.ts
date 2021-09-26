@@ -1,3 +1,4 @@
+import type { ContextFunction } from "apollo-server-core";
 import type { ExpressContext } from "apollo-server-express";
 import {
   NotBeforeError,
@@ -6,15 +7,18 @@ import {
 } from "jsonwebtoken";
 
 import type { Application } from "../../2.application/Application";
+import type { LoggedUser } from "../../2.application/model/LoggedUser";
 
 import { application } from "./bootstrap";
 
 export interface Context {
   app: Application;
-  userId?: string;
+  user?: LoggedUser;
 }
 
-export const context = ({ req }: ExpressContext): Context => {
+export const context: ContextFunction<ExpressContext> = async ({
+  req,
+}): Promise<Context> => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
@@ -24,12 +28,11 @@ export const context = ({ req }: ExpressContext): Context => {
   const token = authHeader.replace("Bearer ", "");
 
   try {
-    const decodedToken =
-      application.authenticationService.decodeAccessToken(token);
+    const user = await application.authenticationService.getUserByToken(token);
 
     return {
       app: application,
-      userId: decodedToken?.userId,
+      user,
     };
   } catch (e) {
     // TODO these error types should come from the abstract authentication service
