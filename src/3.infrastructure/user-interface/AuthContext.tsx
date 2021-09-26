@@ -27,15 +27,17 @@ const AuthContext = createContext<IAuthContext>({
   // logout: () => {},
 });
 
-// export const AUTH_TOKEN = "AUTH_TOKEN";
+export const AUTH_TOKEN = "AUTH_TOKEN";
 
 // https://hasura.io/blog/best-practices-of-using-jwt-with-graphql/#jwt_structure
 export const AuthProvider: FunctionComponent = (props) => {
   const [token, setToken] = useState<Token>(); // TODO Cookies.get(AUTH_TOKEN)
 
   useEffect(() => {
-    // if (token) {
-    //   Cookies.set(AUTH_TOKEN, token);
+    if (token) {
+      localStorage.setItem(AUTH_TOKEN, token);
+      //   Cookies.set(AUTH_TOKEN, token);
+    }
     // } else {
     //   Cookies.remove(AUTH_TOKEN);
     // }
