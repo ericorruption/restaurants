@@ -2,13 +2,13 @@ import type { PrismaClient, Role as DbRole } from "@prisma/client";
 
 import type { Email } from "../1.domain/shared-kernel";
 import type { Role, User } from "../1.domain/User";
-import type { EncryptionService } from "../2.application/EncryptionService";
+import type { AuthenticationService } from "../2.application/AuthenticationService";
 import type { UserRepository } from "../2.application/UserRepository";
 
 export class PrismaUserRepository implements UserRepository {
   constructor(
     private readonly prisma: PrismaClient,
-    private readonly encryptionService: EncryptionService
+    private readonly authenticationService: AuthenticationService
   ) {}
   findById(userId: string): Promise<User> {
     throw new Error("Method not implemented.");
@@ -31,7 +31,9 @@ export class PrismaUserRepository implements UserRepository {
   }
 
   async persist(user: User): Promise<void> {
-    const password = await this.encryptionService.encrypt(user.password);
+    const password = await this.authenticationService.encryptPassword(
+      user.password
+    );
     await this.prisma.user.create({
       data: { ...user, password, role: user.role.toUpperCase() as DbRole },
     });

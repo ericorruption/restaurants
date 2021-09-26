@@ -1,6 +1,6 @@
 /* eslint-disable */
-import { GraphQLResolveInfo } from "graphql";
-import { Context } from "./context";
+import type { GraphQLResolveInfo } from "graphql";
+import type { Context } from "./context";
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
@@ -23,9 +23,20 @@ export type Scalars = {
   Float: number;
 };
 
+export type AuthPayload = {
+  __typename?: "AuthPayload";
+  token: Scalars["String"];
+};
+
 export type Mutation = {
   __typename?: "Mutation";
+  login?: Maybe<AuthPayload>;
   signUp: SignUpOutput;
+};
+
+export type MutationLoginArgs = {
+  email: Scalars["String"];
+  password: Scalars["String"];
 };
 
 export type MutationSignUpArgs = {
@@ -166,6 +177,7 @@ export type DirectiveResolverFn<
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
+  AuthPayload: ResolverTypeWrapper<AuthPayload>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   ID: ResolverTypeWrapper<Scalars["ID"]>;
   Mutation: ResolverTypeWrapper<{}>;
@@ -179,6 +191,7 @@ export type ResolversTypes = {
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
+  AuthPayload: AuthPayload;
   Boolean: Scalars["Boolean"];
   ID: Scalars["ID"];
   Mutation: {};
@@ -189,10 +202,24 @@ export type ResolversParentTypes = {
   String: Scalars["String"];
 };
 
+export type AuthPayloadResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes["AuthPayload"] = ResolversParentTypes["AuthPayload"]
+> = {
+  token?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type MutationResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
 > = {
+  login?: Resolver<
+    Maybe<ResolversTypes["AuthPayload"]>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationLoginArgs, "email" | "password">
+  >;
   signUp?: Resolver<
     ResolversTypes["SignUpOutput"],
     ParentType,
@@ -229,6 +256,7 @@ export type SignUpOutputResolvers<
 };
 
 export type Resolvers<ContextType = Context> = {
+  AuthPayload?: AuthPayloadResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Restaurant?: RestaurantResolvers<ContextType>;

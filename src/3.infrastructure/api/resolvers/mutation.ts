@@ -13,4 +13,11 @@ export const mutationResolvers: MutationResolvers = {
 
     return { success: true };
   },
+  login: async (_, args, context) => {
+    const token = await context.app.useCases.logIn.execute(args);
+
+    return {
+      token,
+    };
+  },
 };

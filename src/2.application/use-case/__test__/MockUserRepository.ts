@@ -5,8 +5,8 @@ import type { UserRepository } from "../../UserRepository";
 export class MockUserRepository implements UserRepository {
   private users: User[];
 
-  constructor() {
-    this.users = [];
+  constructor(initialState: User[] = []) {
+    this.users = initialState;
   }
 
   async findById(userId: UserId): Promise<User> {

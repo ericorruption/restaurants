@@ -4,6 +4,7 @@ type Query {
 
 type Mutation {
   signUp(input: SignUpInput!): SignUpOutput!
+  login(email: String!, password: String!): AuthPayload
 }
 
 # TODO use scalars for email and password
@@ -16,6 +17,10 @@ input SignUpInput {
 
 type SignUpOutput {
   success: Boolean!
+}
+
+type AuthPayload {
+  token: String!
 }
 
 # type User {
