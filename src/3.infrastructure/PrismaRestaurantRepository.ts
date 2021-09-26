@@ -1,12 +1,13 @@
+import type { PrismaClient } from "@prisma/client";
+
 import type { Restaurant, RestaurantId } from "../1.domain/Restaurant";
 import type { RestaurantRepository } from "../2.application/RestaurantRepository";
 
-export class InMemoryRestaurantRepository implements RestaurantRepository {
+// TODO implement
+export class PrismaRestaurantRepository implements RestaurantRepository {
   private restaurants: Restaurant[] = [];
 
-  constructor() {
-    this.restaurants = [];
-  }
+  constructor(private readonly prisma: PrismaClient) {}
 
   async findAll(): Promise<Restaurant[]> {
     return Promise.resolve(this.restaurants);
