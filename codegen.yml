@@ -3,10 +3,10 @@ schema: "src/3.infrastructure/api/schema.graphql"
 documents: null
 generates:
   src/3.infrastructure/api/generated.types.ts:
-    # config:
-      # contextType: ../context#Context
+    config:
+      contextType: ./context#Context
     plugins:
       - add:
-          content: '/* eslint-disable */'
+          content: "/* eslint-disable */"
       - typescript
       - typescript-resolvers

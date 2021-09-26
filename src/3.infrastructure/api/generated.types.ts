@@ -1,5 +1,6 @@
 /* eslint-disable */
-import type { GraphQLResolveInfo } from "graphql";
+import { GraphQLResolveInfo } from "graphql";
+import { Context } from "./context";
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
@@ -10,6 +11,9 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
   [SubKey in K]: Maybe<T[SubKey]>;
 };
+export type RequireFields<T, K extends keyof T> = {
+  [X in Exclude<keyof T, K>]?: T[X];
+} & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -17,6 +21,15 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+};
+
+export type Mutation = {
+  __typename?: "Mutation";
+  signUp: SignUpOutput;
+};
+
+export type MutationSignUpArgs = {
+  input: SignUpInput;
 };
 
 export type Query = {
@@ -27,6 +40,23 @@ export type Query = {
 export type Restaurant = {
   __typename?: "Restaurant";
   id: Scalars["ID"];
+};
+
+export enum Role {
+  Owner = "OWNER",
+  User = "USER",
+}
+
+export type SignUpInput = {
+  email: Scalars["String"];
+  name?: Maybe<Scalars["String"]>;
+  password: Scalars["String"];
+  role?: Maybe<Role>;
+};
+
+export type SignUpOutput = {
+  __typename?: "SignUpOutput";
+  success: Scalars["Boolean"];
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -138,8 +168,12 @@ export type DirectiveResolverFn<
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   ID: ResolverTypeWrapper<Scalars["ID"]>;
+  Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   Restaurant: ResolverTypeWrapper<Restaurant>;
+  Role: Role;
+  SignUpInput: SignUpInput;
+  SignUpOutput: ResolverTypeWrapper<SignUpOutput>;
   String: ResolverTypeWrapper<Scalars["String"]>;
 };
 
@@ -147,13 +181,28 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Boolean: Scalars["Boolean"];
   ID: Scalars["ID"];
+  Mutation: {};
   Query: {};
   Restaurant: Restaurant;
+  SignUpInput: SignUpInput;
+  SignUpOutput: SignUpOutput;
   String: Scalars["String"];
 };
 
+export type MutationResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
+> = {
+  signUp?: Resolver<
+    ResolversTypes["SignUpOutput"],
+    ParentType,
+    ContextType,
+    RequireFields<MutationSignUpArgs, "input">
+  >;
+};
+
 export type QueryResolvers<
-  ContextType = any,
+  ContextType = Context,
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
 > = {
   restaurants?: Resolver<
@@ -164,14 +213,24 @@ export type QueryResolvers<
 };
 
 export type RestaurantResolvers<
-  ContextType = any,
+  ContextType = Context,
   ParentType extends ResolversParentTypes["Restaurant"] = ResolversParentTypes["Restaurant"]
 > = {
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type Resolvers<ContextType = any> = {
+export type SignUpOutputResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes["SignUpOutput"] = ResolversParentTypes["SignUpOutput"]
+> = {
+  success?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Resolvers<ContextType = Context> = {
+  Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Restaurant?: RestaurantResolvers<ContextType>;
+  SignUpOutput?: SignUpOutputResolvers<ContextType>;
 };

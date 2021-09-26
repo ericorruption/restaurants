@@ -7,15 +7,14 @@ import { ApolloServer } from "apollo-server";
 
 import type { Resolvers } from "./generated.types";
 import { queryResolvers } from "./resolvers/query";
-
-// import { context } from "./context";
-// import { mutationResolvers } from "./resolvers/Mutation";
+import { mutationResolvers } from "./resolvers/mutation";
+import { context } from "./context";
 // import { userResolvers } from "./resolvers/User";
 // import { subscriptionResolvers } from "./resolvers/Subscription";
 
 const resolvers: Resolvers = {
   Query: queryResolvers,
-  // Mutation: mutationResolvers,
+  Mutation: mutationResolvers,
   // Subscription: subscriptionResolvers,
   // User: userResolvers,
 };
@@ -23,7 +22,7 @@ const resolvers: Resolvers = {
 const server = new ApolloServer({
   typeDefs: fs.readFileSync(path.join(__dirname, "schema.graphql"), "utf-8"),
   resolvers,
-  // context,
+  context,
 });
 
 void server
