@@ -1,5 +1,6 @@
 import { AuthorizationService } from "../../AuthorizationService";
 import { CreateRestaurant } from "../CreateRestaurant";
+
 import { ownerUser, regularUser } from "./fixtures";
 import { MockRestaurantRepository } from "./MockRestaurantRepository";
 

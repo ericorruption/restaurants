@@ -3,6 +3,7 @@ import type { User } from "../../1.domain/User";
 import type { AuthorizationService } from "../AuthorizationService";
 import { Unauthorized } from "../Exceptions";
 import type { RestaurantRepository } from "../RestaurantRepository";
+
 import type { UseCase } from "./UseCase";
 
 interface Input {
@@ -15,7 +16,7 @@ export class CreateRestaurant implements UseCase {
     private authorizationService: AuthorizationService
   ) {}
 
-  async execute(input: Input) {
+  async execute(input: Input): Promise<void> {
     if (!this.authorizationService.isAllowedToCreateRestaurant(input.user)) {
       throw new Unauthorized();
     }

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 import { App } from "../3.infrastructure/user-interface/App";
 
-export const main = () => {
+export const main = (): void => {
   ReactDOM.render(
     <React.StrictMode>
       <App />

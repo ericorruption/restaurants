@@ -1,11 +1,13 @@
-require("dotenv").config();
+import "dotenv/config";
 
 import fs from "fs";
 import path from "path";
+
 import { ApolloServer } from "apollo-server";
 
 import type { Resolvers } from "./generated.types";
 import { queryResolvers } from "./resolvers/query";
+
 // import { context } from "./context";
 // import { mutationResolvers } from "./resolvers/Mutation";
 // import { userResolvers } from "./resolvers/User";
@@ -24,4 +26,6 @@ const server = new ApolloServer({
   // context,
 });
 
-server.listen().then(({ url }) => console.log(`Server is running on ${url}`));
+void server
+  .listen()
+  .then(({ url }) => console.log(`Server is running on ${url}`));

@@ -8,16 +8,17 @@ export class MockUserRepository implements UserRepository {
     this.users = [];
   }
 
-  async findById(userId: UserId) {
+  async findById(userId: UserId): Promise<User> {
     const user = this.users.find((user) => user.id === userId);
     if (!user) {
       throw new Error("User not found");
     }
 
-    return user;
+    return Promise.resolve(user);
   }
 
-  async persist(user: User): Promise<void> {
+  persist(user: User): Promise<void> {
     this.users.push(user);
+    return Promise.resolve();
   }
 }

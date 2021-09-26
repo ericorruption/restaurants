@@ -3,6 +3,7 @@ import type { User } from "../../1.domain/User";
 import type { AuthorizationService } from "../AuthorizationService";
 import { Unauthorized } from "../Exceptions";
 import type { RestaurantRepository } from "../RestaurantRepository";
+
 import type { UseCase } from "./UseCase";
 
 interface Input {
@@ -20,6 +21,8 @@ export class ListRestaurants implements UseCase {
       throw new Unauthorized();
     }
 
-    return this.restaurantRepository.findAll();
+    const restaurants = await this.restaurantRepository.findAll();
+
+    return restaurants;
   }
 }

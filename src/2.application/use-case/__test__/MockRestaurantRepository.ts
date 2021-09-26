@@ -14,7 +14,7 @@ export class MockRestaurantRepository implements RestaurantRepository {
     });
   }
 
-  async persist(restaurant: Restaurant) {
+  persist(restaurant: Restaurant): Promise<void> {
     return Promise.resolve();
   }
 }

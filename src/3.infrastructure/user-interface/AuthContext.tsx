@@ -14,14 +14,14 @@ interface IAuthContext {
   token: Token;
   setToken: Dispatch<SetStateAction<Token>>;
   isLoggedIn: boolean;
-  logout: VoidFunction;
+  // logout: VoidFunction;
 }
 
 const AuthContext = createContext<IAuthContext>({
   token: undefined,
   setToken: () => undefined,
   isLoggedIn: false,
-  logout: () => {},
+  // logout: () => {},
 });
 
 // export const AUTH_TOKEN = "AUTH_TOKEN";
@@ -52,11 +52,11 @@ export const AuthProvider: FunctionComponent = (props) => {
         token,
         setToken,
         isLoggedIn: !!token,
-        logout: () => setToken(undefined),
+        // logout: () => setToken(undefined),
       }}
       {...props}
     />
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = (): IAuthContext => useContext(AuthContext);

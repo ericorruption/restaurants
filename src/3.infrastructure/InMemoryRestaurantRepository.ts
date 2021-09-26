@@ -9,7 +9,7 @@ export class InMemoryRestaurantRepository implements RestaurantRepository {
   }
 
   async findAll(): Promise<Restaurant[]> {
-    return this.restaurants;
+    return Promise.resolve(this.restaurants);
   }
 
   async findById(restaurantId: RestaurantId): Promise<Restaurant> {
@@ -21,7 +21,7 @@ export class InMemoryRestaurantRepository implements RestaurantRepository {
       throw new Error(`Restaurant with id ${restaurantId} not found`);
     }
 
-    return restaurant;
+    return Promise.resolve(restaurant);
   }
 
   persist(restaurant: Restaurant): Promise<void> {
