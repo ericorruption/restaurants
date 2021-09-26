@@ -1,3 +1,4 @@
+import type { Email } from "../../../1.domain/shared-kernel";
 import type { User, UserId } from "../../../1.domain/User";
 import type { UserRepository } from "../../UserRepository";
 
@@ -15,6 +16,16 @@ export class MockUserRepository implements UserRepository {
     }
 
     return Promise.resolve(user);
+  }
+
+  findByEmail(email: Email): Promise<User> {
+    const user = this.users.find((user) => user.email === email);
+
+    if (!user) {
+      throw new Error("User not found");
+    } else {
+      return Promise.resolve(user);
+    }
   }
 
   persist(user: User): Promise<void> {
