@@ -20,4 +20,14 @@ export const mutationResolvers: MutationResolvers = {
       token,
     };
   },
+  createRestaurant: async (_, args, context) => {
+    const newRestaurant = await context.app.useCases.createRestaurant.execute({
+      ...args.input,
+      user: context.user,
+    });
+
+    return {
+      ...newRestaurant,
+    };
+  },
 };

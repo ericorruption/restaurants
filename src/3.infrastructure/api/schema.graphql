@@ -5,6 +5,7 @@ type Query {
 type Mutation {
   signUp(input: SignUpInput!): SignUpOutput!
   login(email: String!, password: String!): AuthPayload
+  createRestaurant(input: CreateRestaurantInput!): Restaurant!
 }
 
 # TODO use scalars for email and password
@@ -23,6 +24,10 @@ type AuthPayload {
   token: String!
 }
 
+input CreateRestaurantInput {
+  name: String!
+}
+
 # type User {
 #   id: ID!;
 #   name: String;
@@ -31,6 +36,8 @@ type AuthPayload {
 
 type Restaurant {
   id: ID!
+  ownerId: ID!
+  name: String!
 }
 
 enum Role {

@@ -13,10 +13,10 @@ test("CreateRestaurant use case", async () => {
   expect.assertions(2);
 
   await expect(
-    createRestaurant.execute({ user: ownerUser })
-  ).resolves.toBeUndefined();
+    createRestaurant.execute({ user: ownerUser, name: "Test" })
+  ).resolves.toBeTruthy();
 
   await expect(
-    createRestaurant.execute({ user: regularUser })
+    createRestaurant.execute({ user: regularUser, name: "Test" })
   ).rejects.toThrowError();
 });

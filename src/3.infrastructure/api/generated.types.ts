@@ -28,10 +28,19 @@ export type AuthPayload = {
   token: Scalars["String"];
 };
 
+export type CreateRestaurantInput = {
+  name: Scalars["String"];
+};
+
 export type Mutation = {
   __typename?: "Mutation";
+  createRestaurant: Restaurant;
   login?: Maybe<AuthPayload>;
   signUp: SignUpOutput;
+};
+
+export type MutationCreateRestaurantArgs = {
+  input: CreateRestaurantInput;
 };
 
 export type MutationLoginArgs = {
@@ -51,6 +60,8 @@ export type Query = {
 export type Restaurant = {
   __typename?: "Restaurant";
   id: Scalars["ID"];
+  name: Scalars["String"];
+  ownerId: Scalars["ID"];
 };
 
 export enum Role {
@@ -179,6 +190,7 @@ export type DirectiveResolverFn<
 export type ResolversTypes = {
   AuthPayload: ResolverTypeWrapper<AuthPayload>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
+  CreateRestaurantInput: CreateRestaurantInput;
   ID: ResolverTypeWrapper<Scalars["ID"]>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
@@ -193,6 +205,7 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   AuthPayload: AuthPayload;
   Boolean: Scalars["Boolean"];
+  CreateRestaurantInput: CreateRestaurantInput;
   ID: Scalars["ID"];
   Mutation: {};
   Query: {};
@@ -214,6 +227,12 @@ export type MutationResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
 > = {
+  createRestaurant?: Resolver<
+    ResolversTypes["Restaurant"],
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreateRestaurantArgs, "input">
+  >;
   login?: Resolver<
     Maybe<ResolversTypes["AuthPayload"]>,
     ParentType,
@@ -244,6 +263,8 @@ export type RestaurantResolvers<
   ParentType extends ResolversParentTypes["Restaurant"] = ResolversParentTypes["Restaurant"]
 > = {
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  ownerId?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

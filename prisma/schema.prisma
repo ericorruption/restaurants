@@ -18,6 +18,12 @@ model User {
   role     Role    @default(USER)
 }
 
+model Restaurant {
+  id      String @id @default(uuid())
+  ownerId String
+  name    String
+}
+
 enum Role {
   USER
   OWNER

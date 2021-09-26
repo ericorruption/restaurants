@@ -8,13 +8,15 @@ export type RestaurantId = Id;
 export interface Restaurant {
   id: RestaurantId;
   ownerId: UserId;
+  name: string;
 }
 
 interface CreateRestaurantInput {
   ownerId: UserId;
+  name: string;
 }
 
 export const createRestaurant = (input: CreateRestaurantInput): Restaurant => ({
   id: uuid(),
-  ownerId: input.ownerId,
+  ...input,
 });

@@ -4,6 +4,7 @@ import { Application } from "../../2.application/Application";
 import { AuthorizationService } from "../../2.application/AuthorizationService";
 import { CreateUser } from "../../2.application/use-case/auth/CreateUser";
 import { LogIn } from "../../2.application/use-case/auth/LogIn";
+import { CreateRestaurant } from "../../2.application/use-case/CreateRestaurant";
 import { ListRestaurants } from "../../2.application/use-case/ListRestaurants";
 import { ConcreteAuthenticationService } from "../ConcreteAuthenticationService";
 import { PrismaRestaurantRepository } from "../PrismaRestaurantRepository";
@@ -39,6 +40,10 @@ export const application = new Application(
       authenticationServiceImplementation
     ),
     listRestaurants: new ListRestaurants(
+      restaurantRepositoryImplementation,
+      authorizationService
+    ),
+    createRestaurant: new CreateRestaurant(
       restaurantRepositoryImplementation,
       authorizationService
     ),
