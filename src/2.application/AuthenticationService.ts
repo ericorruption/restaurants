@@ -1,12 +1,12 @@
 import type { Password } from "../1.domain/shared-kernel";
-import type { Role, User, UserId } from "../1.domain/User";
+import type { User, UserId } from "../1.domain/User";
 
 export type UnencryptedPassword = Password;
 export type EncryptedPassword = Password;
 export type AccessToken = string;
 export interface DecodedAccessToken {
   userId: UserId;
-  role: Role;
+  // role: Role;
 }
 
 export interface AuthenticationService {

@@ -30,6 +30,7 @@ export class ConcreteAuthenticationService implements AuthenticationService {
     return jwt.sign(
       {
         userId: user.id,
+        // roles: [user.role],
       },
       this.secret,
       {

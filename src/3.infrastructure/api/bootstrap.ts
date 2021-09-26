@@ -30,14 +30,17 @@ const restaurantRepositoryImplementation = new PrismaRestaurantRepository(
   prismaClient
 );
 
-export const application = new Application({
-  createUser: new CreateUser(userRepositoryImplementation),
-  logIn: new LogIn(
-    userRepositoryImplementation,
-    authenticationServiceImplementation
-  ),
-  listRestaurants: new ListRestaurants(
-    restaurantRepositoryImplementation,
-    authorizationService
-  ),
-});
+export const application = new Application(
+  {
+    createUser: new CreateUser(userRepositoryImplementation),
+    logIn: new LogIn(
+      userRepositoryImplementation,
+      authenticationServiceImplementation
+    ),
+    listRestaurants: new ListRestaurants(
+      restaurantRepositoryImplementation,
+      authorizationService
+    ),
+  },
+  authenticationServiceImplementation
+);

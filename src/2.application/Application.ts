@@ -1,3 +1,4 @@
+import type { AuthenticationService } from "./AuthenticationService";
 import type { CreateUser } from "./use-case/auth/CreateUser";
 import type { LogIn } from "./use-case/auth/LogIn";
 import type { ListRestaurants } from "./use-case/ListRestaurants";
@@ -9,9 +10,8 @@ interface UseCases {
 }
 
 export class Application {
-  useCases: UseCases;
-
-  constructor(useCases: UseCases) {
-    this.useCases = useCases;
-  }
+  constructor(
+    public useCases: UseCases,
+    public authenticationService: AuthenticationService
+  ) {}
 }
