@@ -8,13 +8,9 @@
     "start": "nodemon src/0.bin/server.ts",
     "start:frontend": "react-scripts start",
     "script:codegen": "graphql-codegen --config codegen.yml",
-    "lint": "npx eslint src/*"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm test && tsc --noEmit"
-    }
+    "lint": "npx eslint src/*",
+    "typecheck": "tsc",
+    "prepare": "husky install"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown",
