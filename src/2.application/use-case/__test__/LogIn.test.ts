@@ -1,15 +1,9 @@
-import type { AuthenticationService } from "../../AuthenticationService";
 import { LogIn } from "../auth/LogIn";
 
+import { MockAuthenticationService } from "./MockAuthenticationService";
 import { MockUserRepository } from "./MockUserRepository";
 
-const mockAuthenticationService: AuthenticationService = {
-  authenticateUser: (password, user) =>
-    Promise.resolve(password === user.password),
-  decodeAccessToken: () => ({ role: "user", userId: "mock" }),
-  encryptPassword: (input) => Promise.resolve(input),
-  generateAccessToken: () => "mock",
-};
+const mockAuthenticationService = new MockAuthenticationService();
 
 test("LogIn use case", async () => {
   const userRepository = new MockUserRepository([

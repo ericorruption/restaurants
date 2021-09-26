@@ -1,13 +1,13 @@
 import type { Restaurant } from "../../1.domain/Restaurant";
-import type { User } from "../../1.domain/User";
 import type { AuthorizationService } from "../AuthorizationService";
 import { Unauthorized } from "../Exceptions";
+import type { LoggedUser } from "../model/LoggedUser";
 import type { RestaurantRepository } from "../RestaurantRepository";
 
 import type { UseCase } from "./UseCase";
 
 interface Input {
-  user?: User;
+  user?: LoggedUser;
 }
 
 export class ListRestaurants implements UseCase {

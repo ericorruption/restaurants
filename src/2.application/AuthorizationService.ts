@@ -6,7 +6,6 @@ export class AuthorizationService {
   }
 
   isAllowedToCreateRestaurant(user: User): boolean {
-    // TODO input is userId, get user role
     return user.role === "owner";
   }
 }

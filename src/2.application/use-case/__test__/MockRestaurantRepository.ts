@@ -11,6 +11,7 @@ export class MockRestaurantRepository implements RestaurantRepository {
       id: restaurantId,
       ownerId: "",
       reviews: [],
+      name: "Mock",
     });
   }
 
