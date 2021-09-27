@@ -59,4 +59,7 @@ enum Role {
   # ADMIN # We don't need this yet
 }
 
+"""
+ISO-8601 encoded UTC date string. Example value: `"2020-05-04T13:37:01.337Z"`
+"""
 scalar Date
