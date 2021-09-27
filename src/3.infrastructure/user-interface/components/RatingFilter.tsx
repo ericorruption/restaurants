@@ -9,6 +9,7 @@ import type {
 import type { NumberBetween1And5 } from "../../../1.domain/shared-kernel";
 
 import "./RatingFilter.css";
+import { StarRating } from "./StarRating";
 
 export const RatingFilter: FunctionComponent<{
   value?: NumberBetween1And5;
@@ -47,7 +48,7 @@ export const RatingFilter: FunctionComponent<{
 };
 
 const RatingRadio: FunctionComponent<{
-  value: number;
+  value: NumberBetween1And5;
   checked: boolean;
   onChange: ChangeEventHandler<HTMLInputElement>;
 }> = ({ value, checked, onChange }) => (
@@ -59,6 +60,6 @@ const RatingRadio: FunctionComponent<{
       onChange={onChange}
       checked={checked}
     />{" "}
-    {Array(value).fill("⭐").join("")}
+    <StarRating value={value} />
   </label>
 );

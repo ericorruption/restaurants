@@ -1,0 +1,22 @@
+.restaurant-page-title {
+  margin-bottom: 0;
+}
+
+.restaurant-page-average-rating {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+@media (min-width: 48rem) {
+  .restaurant-page-grid {
+    display: flex;
+  }
+}
+
+.restaurant-page-grid--1 {
+  flex: 1;
+}
+
+.restaurant-page-grid--2 {
+  flex: 2;
+}
