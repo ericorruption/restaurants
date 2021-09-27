@@ -1,3 +1,4 @@
+import { AuthenticationError } from "apollo-server";
 import type { ContextFunction } from "apollo-server-core";
 import type { ExpressContext } from "apollo-server-express";
 import {
@@ -36,11 +37,9 @@ export const context: ContextFunction<ExpressContext> = async ({
     };
   } catch (e) {
     // TODO these error types should come from the abstract authentication service
-    if (
-      e instanceof JsonWebTokenError ||
-      e instanceof TokenExpiredError ||
-      e instanceof NotBeforeError
-    ) {
+    if (e instanceof TokenExpiredError) {
+      throw new AuthenticationError("Token expired");
+    } else if (e instanceof JsonWebTokenError || e instanceof NotBeforeError) {
       return { app: application };
     } else {
       throw e;
