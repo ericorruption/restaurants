@@ -15,6 +15,7 @@ import { ReplyToReview } from "../../2.application/use-case/ReplyToReview";
 import { PrismaReplyRepository } from "../repository/PrismaReplyRepository";
 import { GetRestaurant } from "../../2.application/use-case/GetRestaurant";
 import { GetUser } from "../../2.application/use-case/GetUser";
+import { ListOwnerRestaurants } from "../../2.application/use-case/ListOwnerRestaurants";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -67,6 +68,9 @@ export const application = new Application(
     ),
     getRestaurant: new GetRestaurant(restaurantRepositoryImplementation),
     getUser: new GetUser(),
+    listOwnerRestaurants: new ListOwnerRestaurants(
+      restaurantRepositoryImplementation
+    ),
   },
   authenticationServiceImplementation
 );

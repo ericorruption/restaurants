@@ -79,6 +79,10 @@ export type QueryRestaurantArgs = {
   id: Scalars["ID"];
 };
 
+export type QueryRestaurantsArgs = {
+  ownerId?: Maybe<Scalars["ID"]>;
+};
+
 export type ReplyToReviewInput = {
   reply: Scalars["String"];
   reviewId: Scalars["ID"];
@@ -355,7 +359,8 @@ export type QueryResolvers<
   restaurants?: Resolver<
     Array<ResolversTypes["Restaurant"]>,
     ParentType,
-    ContextType
+    ContextType,
+    RequireFields<QueryRestaurantsArgs, never>
   >;
 };
 

@@ -1,6 +1,7 @@
 import type { PrismaClient } from "@prisma/client";
 
 import type { Restaurant, RestaurantId } from "../../1.domain/Restaurant";
+import type { UserId } from "../../1.domain/User";
 import type { RestaurantRepository } from "../../2.application/repository/RestaurantRepository";
 
 export class PrismaRestaurantRepository implements RestaurantRepository {
@@ -20,6 +21,18 @@ export class PrismaRestaurantRepository implements RestaurantRepository {
     }
 
     return restaurant;
+  }
+
+  async findByOwnerId(ownerId: UserId): Promise<Restaurant[]> {
+    const restaurants = await this.prisma.restaurant.findMany({
+      where: { ownerId },
+    });
+
+    if (!restaurants) {
+      throw new Error(`Restaurant with ownerId ${ownerId} not found`);
+    }
+
+    return restaurants;
   }
 
   async persist(restaurant: Restaurant): Promise<void> {
