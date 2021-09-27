@@ -9,8 +9,7 @@ import { setContext } from "@apollo/client/link/context";
 import { AUTH_TOKEN } from "../AuthContext";
 
 const httpLink = createHttpLink({
-  // TODO change for production deployment
-  uri: "http://localhost:4000",
+  uri: process.env.REACT_APP_API_URL,
 });
 
 const authLink = setContext((_, { headers }) => {
