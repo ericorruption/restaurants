@@ -18,52 +18,60 @@ interface IAuthContext {
   logIn: (input: { variables: LogInMutationVariables }) => Promise<unknown>;
   logInError?: ApolloError;
   isLoggedIn: boolean;
-  // logout: VoidFunction;
+  logOut: VoidFunction;
 }
 
 const AuthContext = createContext<IAuthContext>({
   logIn: () => Promise.resolve(),
   isLoggedIn: false,
-  // logout: () => {},
+  logOut: () => {
+    // noop
+  },
 });
 
 export const AUTH_TOKEN = "AUTH_TOKEN";
 
 // https://hasura.io/blog/best-practices-of-using-jwt-with-graphql/#jwt_structure
 export const AuthProvider: FunctionComponent = (props) => {
-  const [token, setToken] = useState<Token>(); // TODO Cookies.get(AUTH_TOKEN)
+  const [token, setToken] = useState<Token>(
+    localStorage.getItem(AUTH_TOKEN) ?? undefined
+  ); // TODO Cookies.get(AUTH_TOKEN)
 
   useEffect(() => {
     if (token) {
       localStorage.setItem(AUTH_TOKEN, token);
       //   Cookies.set(AUTH_TOKEN, token);
+    } else {
+      localStorage.removeItem(AUTH_TOKEN);
+      //   Cookies.remove(AUTH_TOKEN);
     }
-    // } else {
-    //   Cookies.remove(AUTH_TOKEN);
-    // }
   }, [token]);
 
   // if (weAreStillWaitingToGetTheUserData) {
   //   return <FullPageSpinner />
   // }
 
-  const [logIn, { data, error }] = useLogInMutation();
+  const [logIn, { data, error, client }] = useLogInMutation();
 
   useEffect(() => {
     if (data?.login) {
       setToken(data.login.token);
+      void client.resetStore();
     }
-  }, [data?.login]);
+  }, [client, data?.login]);
 
-  // TODO move mutations here? e.g.:
-  // const logout = () => {} // clear the token in localStorage and the user data
+  const logOut = () => {
+    setToken(undefined);
+    void client.resetStore();
+  };
+
   return (
     <AuthContext.Provider
       value={{
         logIn,
         logInError: error,
         isLoggedIn: !!token,
-        // logout: () => setToken(undefined),
+        logOut,
       }}
       {...props}
     />

@@ -1,0 +1,19 @@
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: bold;
+  line-height: 2;
+}
+
+.logo:hover,
+.logo:focus {
+  text-decoration: underline;
+}
