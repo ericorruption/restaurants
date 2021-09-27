@@ -30,3 +30,9 @@ query getRestaurant($id: ID!) {
     name
   }
 }
+
+query getUser {
+  me {
+    role
+  }
+}
