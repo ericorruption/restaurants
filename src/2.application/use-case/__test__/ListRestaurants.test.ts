@@ -14,3 +14,6 @@ test("ListRestaurants use case", async () => {
   });
   expect(restaurants).toEqual([]);
 });
+
+// TODO test for sorting based on rating
+// TODO test for returning only restaurants with specific rating

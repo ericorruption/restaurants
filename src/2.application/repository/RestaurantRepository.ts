@@ -1,4 +1,4 @@
-import type { Restaurant, RestaurantId } from "../1.domain/Restaurant";
+import type { Restaurant, RestaurantId } from "../../1.domain/Restaurant";
 
 export interface RestaurantRepository {
   findAll(): Promise<Restaurant[]>;

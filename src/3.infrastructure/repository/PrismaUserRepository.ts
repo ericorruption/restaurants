@@ -4,9 +4,9 @@ import type {
   User as DbUser,
 } from "@prisma/client";
 
-import type { Email } from "../1.domain/shared-kernel";
-import type { Role, User } from "../1.domain/User";
-import type { UserRepository } from "../2.application/UserRepository";
+import type { Email } from "../../1.domain/shared-kernel";
+import type { Role, User } from "../../1.domain/User";
+import type { UserRepository } from "../../2.application/repository/UserRepository";
 
 export class PrismaUserRepository implements UserRepository {
   constructor(private readonly prisma: PrismaClient) {}

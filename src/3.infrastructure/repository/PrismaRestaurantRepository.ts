@@ -1,7 +1,7 @@
 import type { PrismaClient } from "@prisma/client";
 
-import type { Restaurant, RestaurantId } from "../1.domain/Restaurant";
-import type { RestaurantRepository } from "../2.application/RestaurantRepository";
+import type { Restaurant, RestaurantId } from "../../1.domain/Restaurant";
+import type { RestaurantRepository } from "../../2.application/repository/RestaurantRepository";
 
 export class PrismaRestaurantRepository implements RestaurantRepository {
   constructor(private readonly prisma: PrismaClient) {}

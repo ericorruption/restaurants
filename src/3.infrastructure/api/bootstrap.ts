@@ -8,8 +8,8 @@ import { CreateRestaurant } from "../../2.application/use-case/CreateRestaurant"
 import { ListRestaurants } from "../../2.application/use-case/ListRestaurants";
 import { ReviewRestaurant } from "../../2.application/use-case/ReviewRestaurant";
 import { ConcreteAuthenticationService } from "../ConcreteAuthenticationService";
-import { PrismaRestaurantRepository } from "../PrismaRestaurantRepository";
-import { PrismaUserRepository } from "../PrismaUserRepository";
+import { PrismaRestaurantRepository } from "../repository/PrismaRestaurantRepository";
+import { PrismaUserRepository } from "../repository/PrismaUserRepository";
 import { PrismaReviewRepository } from "../repository/PrismaReviewRepository";
 
 const JWT_SECRET = process.env.JWT_SECRET;
