@@ -70,7 +70,12 @@ export type MutationSignUpArgs = {
 
 export type Query = {
   __typename?: "Query";
+  restaurant?: Maybe<Restaurant>;
   restaurants: Array<Restaurant>;
+};
+
+export type QueryRestaurantArgs = {
+  id: Scalars["ID"];
 };
 
 export type ReplyToReviewInput = {
@@ -329,6 +334,12 @@ export type QueryResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
 > = {
+  restaurant?: Resolver<
+    Maybe<ResolversTypes["Restaurant"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryRestaurantArgs, "id">
+  >;
   restaurants?: Resolver<
     Array<ResolversTypes["Restaurant"]>,
     ParentType,
