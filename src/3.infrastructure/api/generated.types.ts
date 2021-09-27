@@ -70,6 +70,7 @@ export type MutationSignUpArgs = {
 
 export type Query = {
   __typename?: "Query";
+  me?: Maybe<User>;
   restaurant?: Maybe<Restaurant>;
   restaurants: Array<Restaurant>;
 };
@@ -131,6 +132,14 @@ export type SignUpInput = {
 export type SignUpOutput = {
   __typename?: "SignUpOutput";
   success: Scalars["Boolean"];
+};
+
+export type User = {
+  __typename?: "User";
+  email: Scalars["String"];
+  id: Scalars["ID"];
+  name?: Maybe<Scalars["String"]>;
+  role: Role;
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -258,6 +267,7 @@ export type ResolversTypes = {
   SignUpInput: SignUpInput;
   SignUpOutput: ResolverTypeWrapper<SignUpOutput>;
   String: ResolverTypeWrapper<Scalars["String"]>;
+  User: ResolverTypeWrapper<User>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -279,6 +289,7 @@ export type ResolversParentTypes = {
   SignUpInput: SignUpInput;
   SignUpOutput: SignUpOutput;
   String: Scalars["String"];
+  User: User;
 };
 
 export type AuthPayloadResolvers<
@@ -334,6 +345,7 @@ export type QueryResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
 > = {
+  me?: Resolver<Maybe<ResolversTypes["User"]>, ParentType, ContextType>;
   restaurant?: Resolver<
     Maybe<ResolversTypes["Restaurant"]>,
     ParentType,
@@ -393,6 +405,17 @@ export type SignUpOutputResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type UserResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
+> = {
+  email?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  role?: Resolver<ResolversTypes["Role"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = Context> = {
   AuthPayload?: AuthPayloadResolvers<ContextType>;
   Date?: GraphQLScalarType;
@@ -403,4 +426,5 @@ export type Resolvers<ContextType = Context> = {
   Review?: ReviewResolvers<ContextType>;
   ReviewRestaurantOutput?: ReviewRestaurantOutputResolvers<ContextType>;
   SignUpOutput?: SignUpOutputResolvers<ContextType>;
+  User?: UserResolvers<ContextType>;
 };

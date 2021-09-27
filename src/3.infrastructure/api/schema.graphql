@@ -1,6 +1,7 @@
 type Query {
   restaurants: [Restaurant!]!
   restaurant(id: ID!): Restaurant
+  me: User
 }
 
 type Mutation {
@@ -59,11 +60,12 @@ type Review {
   visitedAt: Date!
 }
 
-# type User {
-#   id: ID!;
-#   name: String;
-#   email: String!
-# }
+type User {
+  id: ID!
+  name: String
+  email: String!
+  role: Role!
+}
 
 type Restaurant {
   id: ID!
