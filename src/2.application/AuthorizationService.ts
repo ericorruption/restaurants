@@ -1,11 +1,20 @@
-import type { User } from "../1.domain/User";
+import type { LoggedUser } from "./model/LoggedUser";
 
 export class AuthorizationService {
-  isAllowedToListRestaurants(user?: User): boolean {
+  isAllowedToListRestaurants(user?: LoggedUser): boolean {
     return user !== undefined;
   }
 
-  isAllowedToCreateRestaurant(user: User): boolean {
+  isAllowedToCreateRestaurant(user: LoggedUser): boolean {
     return user.role === "owner";
+  }
+
+  isAllowedToCreateReview(user: LoggedUser): boolean {
+    return user.role === "user";
+  }
+
+  isAllowedToReplyToReview(user: LoggedUser): boolean {
+    // TODO user === owner, owner restaurants includes review.restaurantId
+    return true;
   }
 }

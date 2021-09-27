@@ -8,7 +8,7 @@ export interface Input {
   email: Email;
   name?: string;
   password: Password;
-  role?: Exclude<Role, "admin">;
+  role?: Omit<Role, "admin">;
 }
 
 export class CreateUser implements UseCase {
@@ -30,7 +30,11 @@ export class CreateUser implements UseCase {
           input.password
         );
 
-        const newUser = createUser({ ...input, password });
+        const newUser = createUser({
+          ...input,
+          password,
+          role: (input.role ?? "user") as Role,
+        });
 
         // TODO validate email
 
