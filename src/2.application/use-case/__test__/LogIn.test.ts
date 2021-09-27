@@ -1,7 +1,7 @@
 import { LogIn } from "../auth/LogIn";
 
 import { MockAuthenticationService } from "./MockAuthenticationService";
-import { MockUserRepository } from "./MockUserRepository";
+import { MockUserRepository } from "./repository/MockUserRepository";
 
 const mockAuthenticationService = new MockAuthenticationService();
 

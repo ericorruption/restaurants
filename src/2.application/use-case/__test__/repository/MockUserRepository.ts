@@ -1,6 +1,6 @@
-import type { Email } from "../../../1.domain/shared-kernel";
-import type { User, UserId } from "../../../1.domain/User";
-import type { UserRepository } from "../../UserRepository";
+import type { Email } from "../../../../1.domain/shared-kernel";
+import type { User, UserId } from "../../../../1.domain/User";
+import type { UserRepository } from "../../../repository/UserRepository";
 
 export class MockUserRepository implements UserRepository {
   private users: User[];

@@ -1,7 +1,7 @@
 import { CreateUser } from "../auth/CreateUser";
 
 import { MockAuthenticationService } from "./MockAuthenticationService";
-import { MockUserRepository } from "./MockUserRepository";
+import { MockUserRepository } from "./repository/MockUserRepository";
 
 test("CreateUser use case", async () => {
   const mockAuthenticationService = new MockAuthenticationService();

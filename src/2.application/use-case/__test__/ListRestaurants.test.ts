@@ -2,7 +2,7 @@ import { AuthorizationService } from "../../AuthorizationService";
 import { ListRestaurants } from "../ListRestaurants";
 
 import { regularUser } from "./fixtures";
-import { MockRestaurantRepository } from "./MockRestaurantRepository";
+import { MockRestaurantRepository } from "./repository/MockRestaurantRepository";
 
 test("ListRestaurants use case", async () => {
   const listRestaurants = new ListRestaurants(
