@@ -6,6 +6,7 @@ type Mutation {
   signUp(input: SignUpInput!): SignUpOutput!
   login(email: String!, password: String!): AuthPayload
   createRestaurant(input: CreateRestaurantInput!): Restaurant!
+  reviewRestaurant(input: ReviewRestaurantInput!): ReviewRestaurantOutput!
 }
 
 # TODO use scalars for email and password
@@ -28,6 +29,17 @@ input CreateRestaurantInput {
   name: String!
 }
 
+input ReviewRestaurantInput {
+  restaurantId: ID!
+  rating: Int!
+  comment: String!
+  visitedAt: Date!
+}
+
+type ReviewRestaurantOutput {
+  success: Boolean!
+}
+
 # type User {
 #   id: ID!;
 #   name: String;
@@ -38,6 +50,7 @@ type Restaurant {
   id: ID!
   ownerId: ID!
   name: String!
+  # reviews: [Review!]!
 }
 
 enum Role {
@@ -45,3 +58,5 @@ enum Role {
   OWNER
   # ADMIN # We don't need this yet
 }
+
+scalar Date

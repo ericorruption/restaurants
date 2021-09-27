@@ -1,5 +1,9 @@
 /* eslint-disable */
-import type { GraphQLResolveInfo } from "graphql";
+import type {
+  GraphQLResolveInfo,
+  GraphQLScalarType,
+  GraphQLScalarTypeConfig,
+} from "graphql";
 import type { Context } from "./context";
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -21,6 +25,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Date: any;
 };
 
 export type AuthPayload = {
@@ -36,6 +41,7 @@ export type Mutation = {
   __typename?: "Mutation";
   createRestaurant: Restaurant;
   login?: Maybe<AuthPayload>;
+  reviewRestaurant: ReviewRestaurantOutput;
   signUp: SignUpOutput;
 };
 
@@ -46,6 +52,10 @@ export type MutationCreateRestaurantArgs = {
 export type MutationLoginArgs = {
   email: Scalars["String"];
   password: Scalars["String"];
+};
+
+export type MutationReviewRestaurantArgs = {
+  input: ReviewRestaurantInput;
 };
 
 export type MutationSignUpArgs = {
@@ -62,6 +72,18 @@ export type Restaurant = {
   id: Scalars["ID"];
   name: Scalars["String"];
   ownerId: Scalars["ID"];
+};
+
+export type ReviewRestaurantInput = {
+  comment: Scalars["String"];
+  rating: Scalars["Int"];
+  restaurantId: Scalars["ID"];
+  visitedAt: Scalars["Date"];
+};
+
+export type ReviewRestaurantOutput = {
+  __typename?: "ReviewRestaurantOutput";
+  success: Scalars["Boolean"];
 };
 
 export enum Role {
@@ -191,10 +213,14 @@ export type ResolversTypes = {
   AuthPayload: ResolverTypeWrapper<AuthPayload>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   CreateRestaurantInput: CreateRestaurantInput;
+  Date: ResolverTypeWrapper<Scalars["Date"]>;
   ID: ResolverTypeWrapper<Scalars["ID"]>;
+  Int: ResolverTypeWrapper<Scalars["Int"]>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   Restaurant: ResolverTypeWrapper<Restaurant>;
+  ReviewRestaurantInput: ReviewRestaurantInput;
+  ReviewRestaurantOutput: ResolverTypeWrapper<ReviewRestaurantOutput>;
   Role: Role;
   SignUpInput: SignUpInput;
   SignUpOutput: ResolverTypeWrapper<SignUpOutput>;
@@ -206,10 +232,14 @@ export type ResolversParentTypes = {
   AuthPayload: AuthPayload;
   Boolean: Scalars["Boolean"];
   CreateRestaurantInput: CreateRestaurantInput;
+  Date: Scalars["Date"];
   ID: Scalars["ID"];
+  Int: Scalars["Int"];
   Mutation: {};
   Query: {};
   Restaurant: Restaurant;
+  ReviewRestaurantInput: ReviewRestaurantInput;
+  ReviewRestaurantOutput: ReviewRestaurantOutput;
   SignUpInput: SignUpInput;
   SignUpOutput: SignUpOutput;
   String: Scalars["String"];
@@ -222,6 +252,11 @@ export type AuthPayloadResolvers<
   token?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
+
+export interface DateScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["Date"], any> {
+  name: "Date";
+}
 
 export type MutationResolvers<
   ContextType = Context,
@@ -238,6 +273,12 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<MutationLoginArgs, "email" | "password">
+  >;
+  reviewRestaurant?: Resolver<
+    ResolversTypes["ReviewRestaurantOutput"],
+    ParentType,
+    ContextType,
+    RequireFields<MutationReviewRestaurantArgs, "input">
   >;
   signUp?: Resolver<
     ResolversTypes["SignUpOutput"],
@@ -268,6 +309,14 @@ export type RestaurantResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type ReviewRestaurantOutputResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes["ReviewRestaurantOutput"] = ResolversParentTypes["ReviewRestaurantOutput"]
+> = {
+  success?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type SignUpOutputResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes["SignUpOutput"] = ResolversParentTypes["SignUpOutput"]
@@ -278,8 +327,10 @@ export type SignUpOutputResolvers<
 
 export type Resolvers<ContextType = Context> = {
   AuthPayload?: AuthPayloadResolvers<ContextType>;
+  Date?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Restaurant?: RestaurantResolvers<ContextType>;
+  ReviewRestaurantOutput?: ReviewRestaurantOutputResolvers<ContextType>;
   SignUpOutput?: SignUpOutputResolvers<ContextType>;
 };

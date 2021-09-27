@@ -6,9 +6,11 @@ import { CreateUser } from "../../2.application/use-case/auth/CreateUser";
 import { LogIn } from "../../2.application/use-case/auth/LogIn";
 import { CreateRestaurant } from "../../2.application/use-case/CreateRestaurant";
 import { ListRestaurants } from "../../2.application/use-case/ListRestaurants";
+import { ReviewRestaurant } from "../../2.application/use-case/ReviewRestaurant";
 import { ConcreteAuthenticationService } from "../ConcreteAuthenticationService";
 import { PrismaRestaurantRepository } from "../PrismaRestaurantRepository";
 import { PrismaUserRepository } from "../PrismaUserRepository";
+import { PrismaReviewRepository } from "../repository/PrismaReviewRepository";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -29,6 +31,8 @@ const restaurantRepositoryImplementation = new PrismaRestaurantRepository(
   prismaClient
 );
 
+const reviewRepositoryImplementation = new PrismaReviewRepository(prismaClient);
+
 export const application = new Application(
   {
     createUser: new CreateUser(
@@ -45,6 +49,10 @@ export const application = new Application(
     ),
     createRestaurant: new CreateRestaurant(
       restaurantRepositoryImplementation,
+      authorizationService
+    ),
+    reviewRestaurant: new ReviewRestaurant(
+      reviewRepositoryImplementation,
       authorizationService
     ),
   },

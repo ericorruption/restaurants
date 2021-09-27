@@ -30,4 +30,12 @@ export const mutationResolvers: MutationResolvers = {
       ...newRestaurant,
     };
   },
+  reviewRestaurant: async (_, args, context) => {
+    await context.app.useCases.reviewRestaurant.execute({
+      ...args.input,
+      user: context.user,
+    });
+
+    return { success: true };
+  },
 };

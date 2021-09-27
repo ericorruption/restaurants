@@ -19,9 +19,20 @@ model User {
 }
 
 model Restaurant {
-  id      String @id @default(uuid())
+  id      String   @id @default(uuid())
   ownerId String
   name    String
+  reviews Review[]
+}
+
+model Review {
+  id           String     @id @default(uuid())
+  visitedAt    DateTime
+  rating       Int
+  comment      String
+  Restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantId String
+  userId       String
 }
 
 enum Role {

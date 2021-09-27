@@ -10,7 +10,8 @@
     "script:codegen": "graphql-codegen --config codegen.yml",
     "lint": "npx eslint src/*",
     "typecheck": "tsc",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "script:database:migrate": "prisma migrate dev --schema src/3.infrastructure/database/prisma/schema.prisma"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown",
