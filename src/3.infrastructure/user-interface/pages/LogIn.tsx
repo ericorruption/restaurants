@@ -19,7 +19,7 @@ export const LogIn: FunctionComponent = () => {
   };
 
   return (
-    <main>
+    <main className="auth-page">
       <h1>Log in</h1>
 
       {logInError && <p>{logInError.message}</p>}

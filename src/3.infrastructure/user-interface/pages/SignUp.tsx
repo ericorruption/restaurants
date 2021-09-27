@@ -31,7 +31,7 @@ export const SignUp: FunctionComponent = () => {
   };
 
   return (
-    <main>
+    <main className="auth-page">
       <h1>Sign up</h1>
       {error && <p>{error.message}</p>}
       {data && data.signUp.success && <p>Account created successfully!</p>}
@@ -42,20 +42,19 @@ export const SignUp: FunctionComponent = () => {
           <label htmlFor="email">Email</label>
           <input id="email" type="email" required />
 
-          <br />
-
           <label htmlFor="password">Password</label>
           <input id="password" type="password" required />
-
-          <br />
 
           <label htmlFor="repeat-password">Repeat password</label>
           <input id="repeat-password" type="password" required />
 
-          <br />
-
           <label>
-            <input type="checkbox" name="is-owner" value="true" />
+            <input
+              type="checkbox"
+              name="is-owner"
+              value="true"
+              style={{ marginRight: "0.5em" }}
+            />
             I'm a restaurant owner
           </label>
         </fieldset>
