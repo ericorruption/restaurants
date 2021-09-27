@@ -24,6 +24,13 @@ query listRestaurants {
   }
 }
 
+query listOwnerRestaurants($ownerId: ID!) {
+  restaurants(ownerId: $ownerId) {
+    id
+    name
+  }
+}
+
 query getRestaurant($id: ID!) {
   restaurant(id: $id) {
     id
@@ -33,6 +40,9 @@ query getRestaurant($id: ID!) {
 
 query getUser {
   me {
+    id
+    name
+    email
     role
   }
 }

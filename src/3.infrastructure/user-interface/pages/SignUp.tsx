@@ -19,6 +19,7 @@ export const SignUp: FunctionComponent = () => {
       return;
     }
 
+    // TODO if successful, redirect to the home page
     await signUp({
       variables: {
         input: {

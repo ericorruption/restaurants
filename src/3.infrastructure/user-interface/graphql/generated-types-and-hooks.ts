@@ -73,6 +73,10 @@ export type QueryRestaurantArgs = {
   id: Scalars["ID"];
 };
 
+export type QueryRestaurantsArgs = {
+  ownerId?: Maybe<Scalars["ID"]>;
+};
+
 export type ReplyToReviewInput = {
   reply: Scalars["String"];
   reviewId: Scalars["ID"];
@@ -171,6 +175,15 @@ export type ListRestaurantsQuery = {
   restaurants: Array<{ __typename?: "Restaurant"; id: string; name: string }>;
 };
 
+export type ListOwnerRestaurantsQueryVariables = Exact<{
+  ownerId: Scalars["ID"];
+}>;
+
+export type ListOwnerRestaurantsQuery = {
+  __typename?: "Query";
+  restaurants: Array<{ __typename?: "Restaurant"; id: string; name: string }>;
+};
+
 export type GetRestaurantQueryVariables = Exact<{
   id: Scalars["ID"];
 }>;
@@ -184,7 +197,13 @@ export type GetUserQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetUserQuery = {
   __typename?: "Query";
-  me?: Maybe<{ __typename?: "User"; role: Role }>;
+  me?: Maybe<{
+    __typename?: "User";
+    id: string;
+    name?: Maybe<string>;
+    email: string;
+    role: Role;
+  }>;
 };
 
 export const SignUpDocument = gql`
@@ -390,6 +409,65 @@ export type ListRestaurantsQueryResult = Apollo.QueryResult<
   ListRestaurantsQuery,
   ListRestaurantsQueryVariables
 >;
+export const ListOwnerRestaurantsDocument = gql`
+  query listOwnerRestaurants($ownerId: ID!) {
+    restaurants(ownerId: $ownerId) {
+      id
+      name
+    }
+  }
+`;
+
+/**
+ * __useListOwnerRestaurantsQuery__
+ *
+ * To run a query within a React component, call `useListOwnerRestaurantsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListOwnerRestaurantsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListOwnerRestaurantsQuery({
+ *   variables: {
+ *      ownerId: // value for 'ownerId'
+ *   },
+ * });
+ */
+export function useListOwnerRestaurantsQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    ListOwnerRestaurantsQuery,
+    ListOwnerRestaurantsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    ListOwnerRestaurantsQuery,
+    ListOwnerRestaurantsQueryVariables
+  >(ListOwnerRestaurantsDocument, options);
+}
+export function useListOwnerRestaurantsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ListOwnerRestaurantsQuery,
+    ListOwnerRestaurantsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    ListOwnerRestaurantsQuery,
+    ListOwnerRestaurantsQueryVariables
+  >(ListOwnerRestaurantsDocument, options);
+}
+export type ListOwnerRestaurantsQueryHookResult = ReturnType<
+  typeof useListOwnerRestaurantsQuery
+>;
+export type ListOwnerRestaurantsLazyQueryHookResult = ReturnType<
+  typeof useListOwnerRestaurantsLazyQuery
+>;
+export type ListOwnerRestaurantsQueryResult = Apollo.QueryResult<
+  ListOwnerRestaurantsQuery,
+  ListOwnerRestaurantsQueryVariables
+>;
 export const GetRestaurantDocument = gql`
   query getRestaurant($id: ID!) {
     restaurant(id: $id) {
@@ -452,6 +530,9 @@ export type GetRestaurantQueryResult = Apollo.QueryResult<
 export const GetUserDocument = gql`
   query getUser {
     me {
+      id
+      name
+      email
       role
     }
   }
