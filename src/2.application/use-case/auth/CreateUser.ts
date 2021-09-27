@@ -1,7 +1,7 @@
 import type { Email, Password } from "../../../1.domain/shared-kernel";
 import { createUser, Role } from "../../../1.domain/User";
 import type { AuthenticationService } from "../../AuthenticationService";
-import type { UserRepository } from "../../UserRepository";
+import type { UserRepository } from "../../repository/UserRepository";
 import type { UseCase } from "../UseCase";
 
 export interface Input {

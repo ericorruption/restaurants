@@ -3,7 +3,7 @@ import type {
   AccessToken,
   AuthenticationService,
 } from "../../AuthenticationService";
-import type { UserRepository } from "../../UserRepository";
+import type { UserRepository } from "../../repository/UserRepository";
 import type { UseCase } from "../UseCase";
 
 interface Input {

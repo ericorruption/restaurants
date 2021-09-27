@@ -9,7 +9,7 @@ import type {
   UnencryptedPassword,
 } from "../2.application/AuthenticationService";
 import type { LoggedUser } from "../2.application/model/LoggedUser";
-import type { UserRepository } from "../2.application/UserRepository";
+import type { UserRepository } from "../2.application/repository/UserRepository";
 
 type DecodedAccessToken = { userId: UserId };
 
