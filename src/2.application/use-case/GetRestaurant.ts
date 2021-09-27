@@ -10,6 +10,7 @@ interface Input {
   restaurantId: RestaurantId;
 }
 
+// TODO guard against non-existing restaurant
 export class GetRestaurant implements UseCase {
   constructor(private readonly restaurantRepository: RestaurantRepository) {}
 

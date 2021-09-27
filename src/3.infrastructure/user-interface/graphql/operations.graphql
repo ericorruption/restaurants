@@ -23,3 +23,10 @@ query listRestaurants {
     name
   }
 }
+
+query getRestaurant($id: ID!) {
+  restaurant(id: $id) {
+    id
+    name
+  }
+}

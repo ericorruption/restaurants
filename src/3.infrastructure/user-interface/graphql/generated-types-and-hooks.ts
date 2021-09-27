@@ -19,6 +19,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** ISO-8601 encoded UTC date string. Example value: `"2020-05-04T13:37:01.337Z"` */
+  Date: any;
 };
 
 export type AuthPayload = {
@@ -34,6 +36,8 @@ export type Mutation = {
   __typename?: "Mutation";
   createRestaurant: Restaurant;
   login?: Maybe<AuthPayload>;
+  replyToReview: ReplyToReviewOutput;
+  reviewRestaurant: Review;
   signUp: SignUpOutput;
 };
 
@@ -46,13 +50,36 @@ export type MutationLoginArgs = {
   password: Scalars["String"];
 };
 
+export type MutationReplyToReviewArgs = {
+  input: ReplyToReviewInput;
+};
+
+export type MutationReviewRestaurantArgs = {
+  input: ReviewRestaurantInput;
+};
+
 export type MutationSignUpArgs = {
   input: SignUpInput;
 };
 
 export type Query = {
   __typename?: "Query";
+  restaurant?: Maybe<Restaurant>;
   restaurants: Array<Restaurant>;
+};
+
+export type QueryRestaurantArgs = {
+  id: Scalars["ID"];
+};
+
+export type ReplyToReviewInput = {
+  reply: Scalars["String"];
+  reviewId: Scalars["ID"];
+};
+
+export type ReplyToReviewOutput = {
+  __typename?: "ReplyToReviewOutput";
+  success: Scalars["Boolean"];
 };
 
 export type Restaurant = {
@@ -60,6 +87,27 @@ export type Restaurant = {
   id: Scalars["ID"];
   name: Scalars["String"];
   ownerId: Scalars["ID"];
+};
+
+export type Review = {
+  __typename?: "Review";
+  comment: Scalars["String"];
+  id: Scalars["ID"];
+  rating: Scalars["Int"];
+  restaurantId: Scalars["ID"];
+  visitedAt: Scalars["Date"];
+};
+
+export type ReviewRestaurantInput = {
+  comment: Scalars["String"];
+  rating: Scalars["Int"];
+  restaurantId: Scalars["ID"];
+  visitedAt: Scalars["Date"];
+};
+
+export type ReviewRestaurantOutput = {
+  __typename?: "ReviewRestaurantOutput";
+  success: Scalars["Boolean"];
 };
 
 export enum Role {
@@ -112,6 +160,15 @@ export type ListRestaurantsQueryVariables = Exact<{ [key: string]: never }>;
 export type ListRestaurantsQuery = {
   __typename?: "Query";
   restaurants: Array<{ __typename?: "Restaurant"; id: string; name: string }>;
+};
+
+export type GetRestaurantQueryVariables = Exact<{
+  id: Scalars["ID"];
+}>;
+
+export type GetRestaurantQuery = {
+  __typename?: "Query";
+  restaurant?: Maybe<{ __typename?: "Restaurant"; id: string; name: string }>;
 };
 
 export const SignUpDocument = gql`
@@ -316,4 +373,63 @@ export type ListRestaurantsLazyQueryHookResult = ReturnType<
 export type ListRestaurantsQueryResult = Apollo.QueryResult<
   ListRestaurantsQuery,
   ListRestaurantsQueryVariables
+>;
+export const GetRestaurantDocument = gql`
+  query getRestaurant($id: ID!) {
+    restaurant(id: $id) {
+      id
+      name
+    }
+  }
+`;
+
+/**
+ * __useGetRestaurantQuery__
+ *
+ * To run a query within a React component, call `useGetRestaurantQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRestaurantQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRestaurantQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetRestaurantQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetRestaurantQuery,
+    GetRestaurantQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetRestaurantQuery, GetRestaurantQueryVariables>(
+    GetRestaurantDocument,
+    options
+  );
+}
+export function useGetRestaurantLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetRestaurantQuery,
+    GetRestaurantQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetRestaurantQuery, GetRestaurantQueryVariables>(
+    GetRestaurantDocument,
+    options
+  );
+}
+export type GetRestaurantQueryHookResult = ReturnType<
+  typeof useGetRestaurantQuery
+>;
+export type GetRestaurantLazyQueryHookResult = ReturnType<
+  typeof useGetRestaurantLazyQuery
+>;
+export type GetRestaurantQueryResult = Apollo.QueryResult<
+  GetRestaurantQuery,
+  GetRestaurantQueryVariables
 >;

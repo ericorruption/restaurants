@@ -5,15 +5,44 @@ import type { RestaurantId } from "../../../1.domain/Restaurant";
 import { Review } from "../components/Review";
 import { ReviewForm } from "../components/ReviewForm";
 import { StarRating } from "../components/StarRating";
+import { useGetRestaurantQuery } from "../graphql/generated-types-and-hooks";
 
 import "./Restaurant.css";
 
 export const Restaurant: FunctionComponent = () => {
   const { restaurantId } = useParams<{ restaurantId: RestaurantId }>();
 
+  const { data, loading, error } = useGetRestaurantQuery({
+    variables: { id: restaurantId },
+  });
+
+  if (loading) {
+    return (
+      <main>
+        <p>Loading...</p>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main>
+        <p>Error: {error.message}</p>
+      </main>
+    );
+  }
+
+  if (!data?.restaurant) {
+    return (
+      <main>
+        <h1>Restaurant not found</h1>
+      </main>
+    );
+  }
+
   return (
     <main>
-      <h1 className="restaurant-page-title">Restaurant name</h1>
+      <h1 className="restaurant-page-title">{data.restaurant.name}</h1>
 
       <p className="restaurant-page-average-rating">
         {/* 1. Overall average rating */}
