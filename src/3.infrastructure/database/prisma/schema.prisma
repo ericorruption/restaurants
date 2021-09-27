@@ -35,6 +35,11 @@ model Review {
   userId       String
 }
 
+model Reply {
+  reviewId String @id
+  comment  String
+}
+
 enum Role {
   USER
   OWNER

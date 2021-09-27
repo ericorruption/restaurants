@@ -3,6 +3,7 @@ import type { CreateUser } from "./use-case/auth/CreateUser";
 import type { LogIn } from "./use-case/auth/LogIn";
 import type { CreateRestaurant } from "./use-case/CreateRestaurant";
 import type { ListRestaurants } from "./use-case/ListRestaurants";
+import type { ReplyToReview } from "./use-case/ReplyToReview";
 import type { ReviewRestaurant } from "./use-case/ReviewRestaurant";
 
 interface UseCases {
@@ -11,6 +12,7 @@ interface UseCases {
   listRestaurants: ListRestaurants;
   createRestaurant: CreateRestaurant;
   reviewRestaurant: ReviewRestaurant;
+  replyToReview: ReplyToReview;
 }
 
 export class Application {

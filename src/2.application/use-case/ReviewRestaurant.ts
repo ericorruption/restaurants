@@ -1,4 +1,4 @@
-import { createReview } from "../../1.domain/Review";
+import { createReview, Review } from "../../1.domain/Review";
 import type { AuthorizationService } from "../AuthorizationService";
 import { Unauthorized } from "../Exceptions";
 import type { LoggedUser } from "../model/LoggedUser";
@@ -20,7 +20,7 @@ export class ReviewRestaurant implements UseCase {
     private readonly authorizationService: AuthorizationService
   ) {}
 
-  async execute({ user, ...restaurantInput }: Input): Promise<void> {
+  async execute({ user, ...restaurantInput }: Input): Promise<Review> {
     if (!user || !this.authorizationService.isAllowedToCreateReview(user)) {
       throw new Unauthorized();
     }
@@ -29,6 +29,6 @@ export class ReviewRestaurant implements UseCase {
 
     await this.reviewRepository.persist(newReview);
 
-    // return newReview
+    return newReview;
   }
 }

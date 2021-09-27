@@ -19,7 +19,7 @@ test("ReviewRestaurant use case", async () => {
       restaurantId: "1",
       visitedAt: new Date(),
     })
-  ).resolves.toBeUndefined();
+  ).resolves.toBeTruthy();
 });
 
 test("ReviewRestaurant use case: owners cannot review restaurants", async () => {

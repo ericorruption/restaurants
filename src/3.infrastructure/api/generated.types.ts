@@ -25,6 +25,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** ISO-8601 encoded UTC date string. Example value: `"2020-05-04T13:37:01.337Z"` */
   Date: any;
 };
 
@@ -41,7 +42,8 @@ export type Mutation = {
   __typename?: "Mutation";
   createRestaurant: Restaurant;
   login?: Maybe<AuthPayload>;
-  reviewRestaurant: ReviewRestaurantOutput;
+  replyToReview: ReplyToReviewOutput;
+  reviewRestaurant: Review;
   signUp: SignUpOutput;
 };
 
@@ -52,6 +54,10 @@ export type MutationCreateRestaurantArgs = {
 export type MutationLoginArgs = {
   email: Scalars["String"];
   password: Scalars["String"];
+};
+
+export type MutationReplyToReviewArgs = {
+  input: ReplyToReviewInput;
 };
 
 export type MutationReviewRestaurantArgs = {
@@ -67,11 +73,30 @@ export type Query = {
   restaurants: Array<Restaurant>;
 };
 
+export type ReplyToReviewInput = {
+  reply: Scalars["String"];
+  reviewId: Scalars["ID"];
+};
+
+export type ReplyToReviewOutput = {
+  __typename?: "ReplyToReviewOutput";
+  success: Scalars["Boolean"];
+};
+
 export type Restaurant = {
   __typename?: "Restaurant";
   id: Scalars["ID"];
   name: Scalars["String"];
   ownerId: Scalars["ID"];
+};
+
+export type Review = {
+  __typename?: "Review";
+  comment: Scalars["String"];
+  id: Scalars["ID"];
+  rating: Scalars["Int"];
+  restaurantId: Scalars["ID"];
+  visitedAt: Scalars["Date"];
 };
 
 export type ReviewRestaurantInput = {
@@ -218,7 +243,10 @@ export type ResolversTypes = {
   Int: ResolverTypeWrapper<Scalars["Int"]>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
+  ReplyToReviewInput: ReplyToReviewInput;
+  ReplyToReviewOutput: ResolverTypeWrapper<ReplyToReviewOutput>;
   Restaurant: ResolverTypeWrapper<Restaurant>;
+  Review: ResolverTypeWrapper<Review>;
   ReviewRestaurantInput: ReviewRestaurantInput;
   ReviewRestaurantOutput: ResolverTypeWrapper<ReviewRestaurantOutput>;
   Role: Role;
@@ -237,7 +265,10 @@ export type ResolversParentTypes = {
   Int: Scalars["Int"];
   Mutation: {};
   Query: {};
+  ReplyToReviewInput: ReplyToReviewInput;
+  ReplyToReviewOutput: ReplyToReviewOutput;
   Restaurant: Restaurant;
+  Review: Review;
   ReviewRestaurantInput: ReviewRestaurantInput;
   ReviewRestaurantOutput: ReviewRestaurantOutput;
   SignUpInput: SignUpInput;
@@ -274,8 +305,14 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationLoginArgs, "email" | "password">
   >;
+  replyToReview?: Resolver<
+    ResolversTypes["ReplyToReviewOutput"],
+    ParentType,
+    ContextType,
+    RequireFields<MutationReplyToReviewArgs, "input">
+  >;
   reviewRestaurant?: Resolver<
-    ResolversTypes["ReviewRestaurantOutput"],
+    ResolversTypes["Review"],
     ParentType,
     ContextType,
     RequireFields<MutationReviewRestaurantArgs, "input">
@@ -299,6 +336,14 @@ export type QueryResolvers<
   >;
 };
 
+export type ReplyToReviewOutputResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes["ReplyToReviewOutput"] = ResolversParentTypes["ReplyToReviewOutput"]
+> = {
+  success?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type RestaurantResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes["Restaurant"] = ResolversParentTypes["Restaurant"]
@@ -306,6 +351,18 @@ export type RestaurantResolvers<
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
   name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   ownerId?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ReviewResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes["Review"] = ResolversParentTypes["Review"]
+> = {
+  comment?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  rating?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  restaurantId?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  visitedAt?: Resolver<ResolversTypes["Date"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -330,7 +387,9 @@ export type Resolvers<ContextType = Context> = {
   Date?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  ReplyToReviewOutput?: ReplyToReviewOutputResolvers<ContextType>;
   Restaurant?: RestaurantResolvers<ContextType>;
+  Review?: ReviewResolvers<ContextType>;
   ReviewRestaurantOutput?: ReviewRestaurantOutputResolvers<ContextType>;
   SignUpOutput?: SignUpOutputResolvers<ContextType>;
 };

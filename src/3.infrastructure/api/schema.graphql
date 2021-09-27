@@ -6,7 +6,8 @@ type Mutation {
   signUp(input: SignUpInput!): SignUpOutput!
   login(email: String!, password: String!): AuthPayload
   createRestaurant(input: CreateRestaurantInput!): Restaurant!
-  reviewRestaurant(input: ReviewRestaurantInput!): ReviewRestaurantOutput!
+  reviewRestaurant(input: ReviewRestaurantInput!): Review!
+  replyToReview(input: ReplyToReviewInput!): ReplyToReviewOutput!
 }
 
 # TODO use scalars for email and password
@@ -38,6 +39,23 @@ input ReviewRestaurantInput {
 
 type ReviewRestaurantOutput {
   success: Boolean!
+}
+
+input ReplyToReviewInput {
+  reviewId: ID!
+  reply: String!
+}
+
+type ReplyToReviewOutput {
+  success: Boolean!
+}
+
+type Review {
+  id: ID!
+  restaurantId: ID!
+  rating: Int!
+  comment: String!
+  visitedAt: Date!
 }
 
 # type User {
