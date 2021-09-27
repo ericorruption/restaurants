@@ -4,10 +4,11 @@
   "private": true,
   "description": "",
   "scripts": {
-    "test": "react-scripts test",
+    "test": "react-scripts test --env=node",
     "start": "nodemon src/0.bin/server.ts",
     "start:frontend": "react-scripts start",
     "script:codegen": "graphql-codegen --config codegen.yml",
+    "build:frontend": "react-scripts build",
     "lint": "npx eslint src/*",
     "typecheck": "tsc",
     "prepare": "husky install",
