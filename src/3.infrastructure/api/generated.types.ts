@@ -1,10 +1,11 @@
 /* eslint-disable */
-import type {
+// @ts-nocheck
+import {
   GraphQLResolveInfo,
   GraphQLScalarType,
   GraphQLScalarTypeConfig,
 } from "graphql";
-import type { Context } from "./context";
+import { Context } from "./context";
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
