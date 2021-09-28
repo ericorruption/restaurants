@@ -4,10 +4,11 @@ import type { Id } from "./shared-kernel";
 import type { UserId } from "./User";
 
 export type RestaurantId = Id;
+export type OwnerId = UserId;
 
 export interface Restaurant {
   id: RestaurantId;
-  ownerId: UserId;
+  ownerId: OwnerId;
   name: string;
 }
 

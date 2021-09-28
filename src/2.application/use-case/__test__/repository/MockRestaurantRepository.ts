@@ -5,13 +5,9 @@ export class MockRestaurantRepository implements RestaurantRepository {
   constructor(private restaurants: Restaurant[] = []) {}
 
   findByOwnerId(ownerId: string): Promise<Restaurant[]> {
-    return Promise.resolve([
-      {
-        id: "1",
-        ownerId,
-        name: "",
-      },
-    ]);
+    return Promise.resolve(
+      this.restaurants.filter((r) => r.ownerId === ownerId)
+    );
   }
 
   findAll(): Promise<Restaurant[]> {

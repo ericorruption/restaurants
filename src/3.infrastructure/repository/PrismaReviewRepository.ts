@@ -1,4 +1,4 @@
-import type { PrismaClient } from "@prisma/client";
+import type { PrismaClient, Review as DbReview } from "@prisma/client";
 
 import type { RestaurantId } from "../../1.domain/Restaurant";
 import type { Review, ReviewId } from "../../1.domain/Review";
@@ -17,7 +17,7 @@ export class PrismaReviewRepository implements ReviewRepository {
       throw new Error(`Review with id ${id} not found`);
     }
 
-    return { ...review, rating: new Rating(review.rating) };
+    return this.toDomainReview(review);
   }
 
   async getByRestaurantId(restaurantId: RestaurantId): Promise<Review[]> {
@@ -26,10 +26,20 @@ export class PrismaReviewRepository implements ReviewRepository {
       orderBy: { createdAt: "desc" },
     });
 
-    return reviews.map((review) => ({
-      ...review,
-      rating: new Rating(review.rating),
-    }));
+    return reviews.map((review) => this.toDomainReview(review));
+  }
+
+  async getByRestaurantIds(restaurantIds: RestaurantId[]): Promise<Review[]> {
+    const reviews = await this.prisma.review.findMany({
+      where: {
+        restaurantId: {
+          in: restaurantIds,
+        },
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
+    return reviews.map((review) => this.toDomainReview(review));
   }
 
   async persist(review: Review): Promise<void> {
@@ -56,5 +66,12 @@ export class PrismaReviewRepository implements ReviewRepository {
       }
       return acc;
     }, initialState);
+  }
+
+  private toDomainReview(review: DbReview): Review {
+    return {
+      ...review,
+      rating: new Rating(review.rating),
+    };
   }
 }

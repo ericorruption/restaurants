@@ -5,7 +5,13 @@ import { MockRestaurantRepository } from "./repository/MockRestaurantRepository"
 
 test("ListOwnerRestaurants use case", async () => {
   const listOwnerRestaurants = new ListOwnerRestaurants(
-    new MockRestaurantRepository()
+    new MockRestaurantRepository([
+      {
+        id: "1",
+        name: "Restaurant 1",
+        ownerId: "1",
+      },
+    ])
   );
 
   await expect(

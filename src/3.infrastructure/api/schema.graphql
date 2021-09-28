@@ -58,6 +58,7 @@ type Review {
   rating: Int!
   comment: String!
   visitedAt: Date!
+  reply: String
 }
 
 type User {
@@ -65,6 +66,7 @@ type User {
   name: String
   email: String!
   role: Role!
+  pendingReviews: [Review!]
 }
 
 type Restaurant {

@@ -9,12 +9,12 @@ import type { Resolvers } from "./generated.types";
 import { queryResolvers } from "./resolvers/query";
 import { mutationResolvers } from "./resolvers/mutation";
 import { context } from "./context";
-// import { userResolvers } from "./resolvers/User";
+import { userResolvers } from "./resolvers/user";
 
 const resolvers: Resolvers = {
   Query: queryResolvers,
   Mutation: mutationResolvers,
-  // User: userResolvers,
+  User: userResolvers,
 };
 
 export const server = new ApolloServer({

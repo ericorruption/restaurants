@@ -108,6 +108,7 @@ export type Review = {
   comment: Scalars["String"];
   id: Scalars["ID"];
   rating: Scalars["Int"];
+  reply?: Maybe<Scalars["String"]>;
   restaurantId: Scalars["ID"];
   visitedAt: Scalars["Date"];
 };
@@ -146,6 +147,7 @@ export type User = {
   email: Scalars["String"];
   id: Scalars["ID"];
   name?: Maybe<Scalars["String"]>;
+  pendingReviews?: Maybe<Array<Review>>;
   role: Role;
 };
 
@@ -394,6 +396,7 @@ export type ReviewResolvers<
   comment?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
   rating?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  reply?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   restaurantId?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
   visitedAt?: Resolver<ResolversTypes["Date"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -422,6 +425,11 @@ export type UserResolvers<
   email?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  pendingReviews?: Resolver<
+    Maybe<Array<ResolversTypes["Review"]>>,
+    ParentType,
+    ContextType
+  >;
   role?: Resolver<ResolversTypes["Role"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

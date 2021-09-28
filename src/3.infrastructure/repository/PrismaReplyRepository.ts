@@ -19,6 +19,16 @@ export class PrismaReplyRepository implements ReplyRepository {
     return reply;
   }
 
+  findByReviewIds(reviewIds: ReviewId[]): Promise<Reply[]> {
+    return this.prisma.reply.findMany({
+      where: {
+        reviewId: {
+          in: reviewIds,
+        },
+      },
+    });
+  }
+
   async persist(reviewId: ReviewId, reply: string): Promise<void> {
     await this.prisma.reply.create({ data: { comment: reply, reviewId } });
   }

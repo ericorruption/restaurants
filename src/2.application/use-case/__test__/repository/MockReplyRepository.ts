@@ -4,6 +4,11 @@ import type { ReplyRepository } from "../../../repository/ReplyRepository";
 
 export class MockReplyRepository implements ReplyRepository {
   constructor(private replies: Reply[] = []) {}
+  findByReviewIds(reviewIds: string[]): Promise<Reply[]> {
+    return Promise.resolve(
+      this.replies.filter((reply) => reviewIds.includes(reply.reviewId))
+    );
+  }
 
   findByReviewId(reviewId: ReviewId): Promise<Reply | undefined> {
     const reply = this.replies.find((reply) => reply.reviewId === reviewId);

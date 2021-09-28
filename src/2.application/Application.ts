@@ -8,6 +8,7 @@ import type { ListOwnerRestaurants } from "./use-case/restaurant/ListOwnerRestau
 import type { ListRestaurants } from "./use-case/restaurant/ListRestaurants";
 import type { ReplyToReview } from "./use-case/ReplyToReview";
 import type { ReviewRestaurant } from "./use-case/restaurant/ReviewRestaurant";
+import type { ListPendingReviews } from "./use-case/ListPendingReviews";
 
 interface UseCases {
   createUser: CreateUser;
@@ -19,6 +20,7 @@ interface UseCases {
   getRestaurant: GetRestaurant;
   getUser: GetUser;
   listOwnerRestaurants: ListOwnerRestaurants;
+  listPendingReviews: ListPendingReviews;
 }
 
 export class Application {
