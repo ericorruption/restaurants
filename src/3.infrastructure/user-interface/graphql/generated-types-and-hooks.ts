@@ -92,6 +92,7 @@ export type Restaurant = {
   id: Scalars["ID"];
   name: Scalars["String"];
   ownerId: Scalars["ID"];
+  rating?: Maybe<Scalars["Int"]>;
 };
 
 export type Review = {
@@ -172,7 +173,12 @@ export type ListRestaurantsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type ListRestaurantsQuery = {
   __typename?: "Query";
-  restaurants: Array<{ __typename?: "Restaurant"; id: string; name: string }>;
+  restaurants: Array<{
+    __typename?: "Restaurant";
+    id: string;
+    name: string;
+    rating?: Maybe<number>;
+  }>;
 };
 
 export type ListOwnerRestaurantsQueryVariables = Exact<{
@@ -356,6 +362,7 @@ export const ListRestaurantsDocument = gql`
     restaurants {
       id
       name
+      rating
     }
   }
 `;

@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 
 import type { NumberBetween1And5 } from "../../../1.domain/shared-kernel";
 import { RatingFilter } from "../components/RatingFilter";
+import { StarRating } from "../components/StarRating";
 import { useListRestaurantsQuery } from "../graphql/generated-types-and-hooks";
 
 import "./Main.css";
 
 // TODO move filtering to back-end
 // TODO propagate rating to URL
+// TODO filtering empty state
 export const Main: FunctionComponent = () => {
   const { data, loading, error } = useListRestaurantsQuery();
   const [rating, setRating] = useState<NumberBetween1And5>();
@@ -28,12 +30,19 @@ export const Main: FunctionComponent = () => {
           {data && data.restaurants.length && (
             <ul>
               {[...data.restaurants]
-                .filter((restaurant) => restaurant)
+                .filter((restaurant) =>
+                  rating ? restaurant.rating === rating : true
+                )
                 .map((restaurant) => (
                   <li key={restaurant.id}>
                     {/* TODO beautiful pic */}
                     <Link to={`/restaurants/${restaurant.id}`}>
-                      {restaurant.name}
+                      {restaurant.name}{" "}
+                      {restaurant.rating && (
+                        <StarRating
+                          value={restaurant.rating as NumberBetween1And5}
+                        />
+                      )}
                     </Link>
                   </li>
                 ))}
