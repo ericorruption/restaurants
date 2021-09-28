@@ -23,6 +23,7 @@ export class PrismaReviewRepository implements ReviewRepository {
   async getByRestaurantId(restaurantId: RestaurantId): Promise<Review[]> {
     const reviews = await this.prisma.review.findMany({
       where: { restaurantId },
+      orderBy: { createdAt: "desc" },
     });
 
     return reviews.map((review) => ({

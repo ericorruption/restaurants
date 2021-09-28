@@ -27,6 +27,7 @@ model Restaurant {
 
 model Review {
   id           String     @id @default(uuid())
+  createdAt    DateTime   @default(now())
   visitedAt    DateTime
   rating       Int
   comment      String
