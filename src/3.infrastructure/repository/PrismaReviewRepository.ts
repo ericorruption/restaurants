@@ -1,7 +1,7 @@
 import type { PrismaClient } from "@prisma/client";
 
 import type { Review, ReviewId } from "../../1.domain/Review";
-import type { NumberBetween1And5 } from "../../1.domain/shared-kernel";
+import { Rating } from "../../1.domain/shared-kernel";
 import type { ReviewRepository } from "../../2.application/repository/ReviewRepository";
 
 export class PrismaReviewRepository implements ReviewRepository {
@@ -16,14 +16,12 @@ export class PrismaReviewRepository implements ReviewRepository {
       throw new Error(`Review with id ${id} not found`);
     }
 
-    const rating = review.rating as NumberBetween1And5;
-
-    return { ...review, rating };
+    return { ...review, rating: new Rating(review.rating) };
   }
 
   async persist(review: Review): Promise<void> {
     await this.prisma.review.create({
-      data: review,
+      data: { ...review, rating: review.rating.value },
     });
   }
 }
