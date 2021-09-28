@@ -10,6 +10,7 @@ import {
 import type { RestaurantId } from "../../../1.domain/Restaurant";
 import type { NumberBetween1And5 } from "../../../1.domain/shared-kernel";
 import {
+  GetRestaurantDocument,
   Role,
   useReviewRestaurantMutation,
 } from "../graphql/generated-types-and-hooks";
@@ -17,12 +18,13 @@ import { useUser } from "../UserContext";
 
 import "./ReviewForm.css";
 
-// TODO refresh list, clear form after successful submit
 export const ReviewForm: FunctionComponent<{ restaurantId: RestaurantId }> = ({
   restaurantId,
 }) => {
   const user = useUser();
-  const [submit] = useReviewRestaurantMutation({});
+  const [submit] = useReviewRestaurantMutation({
+    refetchQueries: [GetRestaurantDocument],
+  });
   const [rating, setRating] = useState<NumberBetween1And5>(5);
 
   const handleRatingChange: ChangeEventHandler<HTMLInputElement> = (event) =>
@@ -45,6 +47,8 @@ export const ReviewForm: FunctionComponent<{ restaurantId: RestaurantId }> = ({
         },
       },
     });
+
+    (event.target as HTMLFormElement).reset();
   };
 
   if (user?.role === Role.Owner) {
