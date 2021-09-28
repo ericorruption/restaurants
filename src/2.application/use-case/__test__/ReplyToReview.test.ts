@@ -1,3 +1,4 @@
+import { Rating } from "../../../1.domain/shared-kernel";
 import { AuthorizationService } from "../../AuthorizationService";
 import { ReplyToReview } from "../ReplyToReview";
 
@@ -10,7 +11,7 @@ test("ReplyToReview use case", async () => {
     {
       id: "1",
       comment: "I liked this restaurant.",
-      rating: 5,
+      rating: new Rating(5),
       restaurantId: "1",
       userId: "1",
       visitedAt: new Date(),

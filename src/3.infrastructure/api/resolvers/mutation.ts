@@ -36,7 +36,7 @@ export const mutationResolvers: MutationResolvers = {
       user: context.user,
     });
 
-    return review;
+    return { ...review, rating: review.rating.value };
   },
   replyToReview: async (_, args, context) => {
     await context.app.useCases.replyToReview.execute({
