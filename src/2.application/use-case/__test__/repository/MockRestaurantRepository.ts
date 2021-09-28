@@ -2,6 +2,8 @@ import type { Restaurant, RestaurantId } from "../../../../1.domain/Restaurant";
 import type { RestaurantRepository } from "../../../repository/RestaurantRepository";
 
 export class MockRestaurantRepository implements RestaurantRepository {
+  constructor(private restaurants: Restaurant[] = []) {}
+
   findByOwnerId(ownerId: string): Promise<Restaurant[]> {
     return Promise.resolve([
       {
@@ -13,7 +15,7 @@ export class MockRestaurantRepository implements RestaurantRepository {
   }
 
   findAll(): Promise<Restaurant[]> {
-    return Promise.resolve([]);
+    return Promise.resolve(this.restaurants);
   }
 
   findById(restaurantId: RestaurantId): Promise<Restaurant> {

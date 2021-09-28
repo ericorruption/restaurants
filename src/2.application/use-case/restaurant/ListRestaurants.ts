@@ -1,8 +1,8 @@
-import type { Restaurant } from "../../../1.domain/Restaurant";
 import type { AuthorizationService } from "../../AuthorizationService";
 import { Unauthorized } from "../../Exceptions";
 import type { LoggedUser } from "../../model/LoggedUser";
-import type { RestaurantRepository } from "../../repository/RestaurantRepository";
+import type { RestaurantWithRating } from "../../model/Restaurant";
+import type { RestaurantService } from "../../RestaurantService";
 import type { UseCase } from "../UseCase";
 
 interface Input {
@@ -11,17 +11,15 @@ interface Input {
 
 export class ListRestaurants implements UseCase {
   constructor(
-    private restaurantRepository: RestaurantRepository,
+    private restaurantService: RestaurantService,
     private authorizationService: AuthorizationService
   ) {}
 
-  async execute(input: Input): Promise<Restaurant[]> {
+  execute(input: Input): Promise<RestaurantWithRating[]> {
     if (!this.authorizationService.isAllowedToListRestaurants(input.user)) {
       throw new Unauthorized();
     }
 
-    const restaurants = await this.restaurantRepository.findAll();
-
-    return restaurants;
+    return this.restaurantService.getAllWithRating();
   }
 }

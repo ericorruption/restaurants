@@ -98,6 +98,7 @@ export type Restaurant = {
   id: Scalars["ID"];
   name: Scalars["String"];
   ownerId: Scalars["ID"];
+  rating?: Maybe<Scalars["Int"]>;
 };
 
 export type Review = {
@@ -379,6 +380,7 @@ export type RestaurantResolvers<
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
   name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   ownerId?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  rating?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

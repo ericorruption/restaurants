@@ -71,6 +71,7 @@ type Restaurant {
   id: ID!
   ownerId: ID!
   name: String!
+  rating: Int
   # reviews: [Review!]!
 }
 

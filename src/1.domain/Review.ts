@@ -6,7 +6,7 @@ import type { UserId } from "./User";
 
 export type ReviewId = Id;
 
-type DateNotInTheFuture = Date;
+export type DateNotInTheFuture = Date;
 
 export interface Review {
   id: ReviewId;

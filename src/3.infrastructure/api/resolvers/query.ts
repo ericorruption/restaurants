@@ -1,7 +1,7 @@
 import type { QueryResolvers, Role } from "../generated.types";
 
 export const queryResolvers: QueryResolvers = {
-  restaurants: (_, args, context) => {
+  restaurants: async (_, args, context) => {
     if (args.ownerId) {
       return context.app.useCases.listOwnerRestaurants.execute({
         ownerId: args.ownerId,
@@ -9,7 +9,14 @@ export const queryResolvers: QueryResolvers = {
       });
     }
 
-    return context.app.useCases.listRestaurants.execute(context);
+    const restaurants = await context.app.useCases.listRestaurants.execute(
+      context
+    );
+
+    return restaurants.map((restaurant) => ({
+      ...restaurant,
+      rating: restaurant.rating?.value,
+    }));
   },
   restaurant: (_, { id }, context) => {
     return context.app.useCases.getRestaurant.execute({
