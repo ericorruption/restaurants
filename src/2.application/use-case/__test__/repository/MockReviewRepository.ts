@@ -5,6 +5,9 @@ import type { ReviewRepository } from "../../../repository/ReviewRepository";
 
 export class MockReviewRepository implements ReviewRepository {
   constructor(private reviews: Review[] = []) {}
+  getPendingReviewsByOwnerId(ownerId: string): Promise<Review[]> {
+    return Promise.resolve(this.reviews);
+  }
 
   getByRestaurantIds(restaurantIds: string[]): Promise<Review[]> {
     return Promise.resolve(

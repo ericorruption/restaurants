@@ -18,7 +18,6 @@ import { GetUser } from "../../2.application/use-case/user/GetUser";
 import { ListOwnerRestaurants } from "../../2.application/use-case/restaurant/ListOwnerRestaurants";
 import { RestaurantService } from "../../2.application/RestaurantService";
 import { ListPendingReviews } from "../../2.application/use-case/ListPendingReviews";
-import { ReviewService } from "../../2.application/ReviewService";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -79,13 +78,7 @@ export const application = new Application(
     listOwnerRestaurants: new ListOwnerRestaurants(
       restaurantRepositoryImplementation
     ),
-    listPendingReviews: new ListPendingReviews(
-      new ReviewService(
-        reviewRepositoryImplementation,
-        restaurantRepositoryImplementation,
-        replyRepositoryImplementation
-      )
-    ),
+    listPendingReviews: new ListPendingReviews(reviewRepositoryImplementation),
   },
   authenticationServiceImplementation
 );

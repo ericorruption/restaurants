@@ -39,11 +39,11 @@ export class PrismaReviewRepository implements ReviewRepository {
   async getPendingReviewsByOwnerId(ownerId: OwnerId): Promise<Review[]> {
     const reviews = await this.prisma.review.findMany({
       where: {
-        replyId: null,
+        Restaurant: {
+          ownerId,
+        },
         AND: {
-          Restaurant: {
-            ownerId,
-          },
+          Reply: null,
         },
       },
     });

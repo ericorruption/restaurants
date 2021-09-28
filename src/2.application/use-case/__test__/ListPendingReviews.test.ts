@@ -1,11 +1,8 @@
 import type { Review } from "../../../1.domain/Review";
 import { Rating } from "../../../1.domain/shared-kernel";
-import { ReviewService } from "../../ReviewService";
 import { ListPendingReviews } from "../ListPendingReviews";
 
 import { ownerUser } from "./fixtures";
-import { MockReplyRepository } from "./repository/MockReplyRepository";
-import { MockRestaurantRepository } from "./repository/MockRestaurantRepository";
 import { MockReviewRepository } from "./repository/MockReviewRepository";
 
 const mockReview: Review = {
@@ -18,23 +15,8 @@ const mockReview: Review = {
 };
 
 test("ListPendingReview use case", async () => {
-  const mockRestaurantRepository = new MockRestaurantRepository([
-    {
-      id: "1",
-      name: "My store",
-      ownerId: ownerUser.id,
-    },
-  ]);
   const mockReviewRepository = new MockReviewRepository([mockReview]);
-  const mockReplyRepository = new MockReplyRepository();
-
-  const listPendingReview = new ListPendingReviews(
-    new ReviewService(
-      mockReviewRepository,
-      mockRestaurantRepository,
-      mockReplyRepository
-    )
-  );
+  const listPendingReview = new ListPendingReviews(mockReviewRepository);
 
   expect.assertions(1);
 
