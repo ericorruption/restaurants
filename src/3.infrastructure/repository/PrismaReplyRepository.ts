@@ -9,12 +9,8 @@ export class PrismaReplyRepository implements ReplyRepository {
 
   async findByReviewId(reviewId: ReviewId): Promise<Reply | undefined> {
     const reply = await this.prisma.reply.findFirst({
-      include: {
-        Review: {
-          where: {
-            id: reviewId,
-          },
-        },
+      where: {
+        reviewId,
       },
     });
 
