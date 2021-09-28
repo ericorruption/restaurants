@@ -1,10 +1,9 @@
-import { createRestaurant, Restaurant } from "../../1.domain/Restaurant";
-import type { AuthorizationService } from "../AuthorizationService";
-import { Unauthorized } from "../Exceptions";
-import type { LoggedUser } from "../model/LoggedUser";
-import type { RestaurantRepository } from "../repository/RestaurantRepository";
-
-import type { UseCase } from "./UseCase";
+import { createRestaurant, Restaurant } from "../../../1.domain/Restaurant";
+import type { AuthorizationService } from "../../AuthorizationService";
+import { Unauthorized } from "../../Exceptions";
+import type { LoggedUser } from "../../model/LoggedUser";
+import type { RestaurantRepository } from "../../repository/RestaurantRepository";
+import type { UseCase } from "../UseCase";
 
 interface Input {
   user?: LoggedUser;

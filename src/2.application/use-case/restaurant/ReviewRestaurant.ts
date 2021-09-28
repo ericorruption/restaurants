@@ -1,10 +1,9 @@
-import { createReview, Review } from "../../1.domain/Review";
-import type { AuthorizationService } from "../AuthorizationService";
-import { Unauthorized } from "../Exceptions";
-import type { LoggedUser } from "../model/LoggedUser";
-import type { ReviewRepository } from "../repository/ReviewRepository";
-
-import type { UseCase } from "./UseCase";
+import { createReview, Review } from "../../../1.domain/Review";
+import type { AuthorizationService } from "../../AuthorizationService";
+import { Unauthorized } from "../../Exceptions";
+import type { LoggedUser } from "../../model/LoggedUser";
+import type { ReviewRepository } from "../../repository/ReviewRepository";
+import type { UseCase } from "../UseCase";
 
 interface Input {
   user?: LoggedUser;

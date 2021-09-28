@@ -4,18 +4,18 @@ import { Application } from "../../2.application/Application";
 import { AuthorizationService } from "../../2.application/AuthorizationService";
 import { CreateUser } from "../../2.application/use-case/auth/CreateUser";
 import { LogIn } from "../../2.application/use-case/auth/LogIn";
-import { CreateRestaurant } from "../../2.application/use-case/CreateRestaurant";
-import { ListRestaurants } from "../../2.application/use-case/ListRestaurants";
-import { ReviewRestaurant } from "../../2.application/use-case/ReviewRestaurant";
+import { CreateRestaurant } from "../../2.application/use-case/restaurant/CreateRestaurant";
+import { ListRestaurants } from "../../2.application/use-case/restaurant/ListRestaurants";
+import { ReviewRestaurant } from "../../2.application/use-case/restaurant/ReviewRestaurant";
 import { ConcreteAuthenticationService } from "../ConcreteAuthenticationService";
 import { PrismaRestaurantRepository } from "../repository/PrismaRestaurantRepository";
 import { PrismaUserRepository } from "../repository/PrismaUserRepository";
 import { PrismaReviewRepository } from "../repository/PrismaReviewRepository";
 import { ReplyToReview } from "../../2.application/use-case/ReplyToReview";
 import { PrismaReplyRepository } from "../repository/PrismaReplyRepository";
-import { GetRestaurant } from "../../2.application/use-case/GetRestaurant";
+import { GetRestaurant } from "../../2.application/use-case/restaurant/GetRestaurant";
 import { GetUser } from "../../2.application/use-case/GetUser";
-import { ListOwnerRestaurants } from "../../2.application/use-case/ListOwnerRestaurants";
+import { ListOwnerRestaurants } from "../../2.application/use-case/restaurant/ListOwnerRestaurants";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 

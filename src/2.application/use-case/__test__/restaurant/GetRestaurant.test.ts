@@ -1,8 +1,7 @@
-import type { Restaurant } from "../../../1.domain/Restaurant";
-import { GetRestaurant } from "../GetRestaurant";
-
-import { regularUser } from "./fixtures";
-import { MockRestaurantRepository } from "./repository/MockRestaurantRepository";
+import type { Restaurant } from "../../../../1.domain/Restaurant";
+import { GetRestaurant } from "../../restaurant/GetRestaurant";
+import { regularUser } from "../fixtures";
+import { MockRestaurantRepository } from "../repository/MockRestaurantRepository";
 
 const mockRestaurant: Restaurant = {
   id: "1",

@@ -1,8 +1,7 @@
-import { AuthorizationService } from "../../AuthorizationService";
-import { CreateRestaurant } from "../CreateRestaurant";
-
-import { ownerUser, regularUser } from "./fixtures";
-import { MockRestaurantRepository } from "./repository/MockRestaurantRepository";
+import { AuthorizationService } from "../../../AuthorizationService";
+import { CreateRestaurant } from "../../restaurant/CreateRestaurant";
+import { ownerUser, regularUser } from "../fixtures";
+import { MockRestaurantRepository } from "../repository/MockRestaurantRepository";
 
 test("CreateRestaurant use case", async () => {
   const createRestaurant = new CreateRestaurant(

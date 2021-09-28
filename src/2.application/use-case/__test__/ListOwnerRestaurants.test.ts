@@ -1,4 +1,4 @@
-import { ListOwnerRestaurants } from "../ListOwnerRestaurants";
+import { ListOwnerRestaurants } from "../restaurant/ListOwnerRestaurants";
 
 import { regularUser } from "./fixtures";
 import { MockRestaurantRepository } from "./repository/MockRestaurantRepository";
