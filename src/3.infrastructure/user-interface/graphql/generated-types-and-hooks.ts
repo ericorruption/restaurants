@@ -140,6 +140,7 @@ export type User = {
   email: Scalars["String"];
   id: Scalars["ID"];
   name?: Maybe<Scalars["String"]>;
+  pendingReviews?: Maybe<Array<Review>>;
   role: Role;
 };
 
@@ -214,13 +215,26 @@ export type ListRestaurantsQuery = {
   }>;
 };
 
-export type ListOwnerRestaurantsQueryVariables = Exact<{
+export type GetOwnerDashboardQueryVariables = Exact<{
   ownerId: Scalars["ID"];
 }>;
 
-export type ListOwnerRestaurantsQuery = {
+export type GetOwnerDashboardQuery = {
   __typename?: "Query";
   restaurants: Array<{ __typename?: "Restaurant"; id: string; name: string }>;
+  me?: Maybe<{
+    __typename?: "User";
+    pendingReviews?: Maybe<
+      Array<{
+        __typename?: "Review";
+        id: string;
+        rating: number;
+        comment: string;
+        visitedAt: any;
+        reply?: Maybe<string>;
+      }>
+    >;
+  }>;
 };
 
 export type GetRestaurantQueryVariables = Exact<{
@@ -245,6 +259,24 @@ export type GetRestaurantQuery = {
   }>;
 };
 
+export type ReviewFragment = {
+  __typename?: "Review";
+  id: string;
+  rating: number;
+  comment: string;
+  visitedAt: any;
+  reply?: Maybe<string>;
+};
+
+export const ReviewFragmentDoc = gql`
+  fragment Review on Review {
+    id
+    rating
+    comment
+    visitedAt
+    reply
+  }
+`;
 export const SignUpDocument = gql`
   mutation signUp($input: SignUpInput!) {
     signUp(input: $input) {
@@ -600,64 +632,70 @@ export type ListRestaurantsQueryResult = Apollo.QueryResult<
   ListRestaurantsQuery,
   ListRestaurantsQueryVariables
 >;
-export const ListOwnerRestaurantsDocument = gql`
-  query listOwnerRestaurants($ownerId: ID!) {
+export const GetOwnerDashboardDocument = gql`
+  query getOwnerDashboard($ownerId: ID!) {
     restaurants(ownerId: $ownerId) {
       id
       name
     }
+    me {
+      pendingReviews {
+        ...Review
+      }
+    }
   }
+  ${ReviewFragmentDoc}
 `;
 
 /**
- * __useListOwnerRestaurantsQuery__
+ * __useGetOwnerDashboardQuery__
  *
- * To run a query within a React component, call `useListOwnerRestaurantsQuery` and pass it any options that fit your needs.
- * When your component renders, `useListOwnerRestaurantsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetOwnerDashboardQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOwnerDashboardQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useListOwnerRestaurantsQuery({
+ * const { data, loading, error } = useGetOwnerDashboardQuery({
  *   variables: {
  *      ownerId: // value for 'ownerId'
  *   },
  * });
  */
-export function useListOwnerRestaurantsQuery(
+export function useGetOwnerDashboardQuery(
   baseOptions: Apollo.QueryHookOptions<
-    ListOwnerRestaurantsQuery,
-    ListOwnerRestaurantsQueryVariables
+    GetOwnerDashboardQuery,
+    GetOwnerDashboardQueryVariables
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<
-    ListOwnerRestaurantsQuery,
-    ListOwnerRestaurantsQueryVariables
-  >(ListOwnerRestaurantsDocument, options);
+    GetOwnerDashboardQuery,
+    GetOwnerDashboardQueryVariables
+  >(GetOwnerDashboardDocument, options);
 }
-export function useListOwnerRestaurantsLazyQuery(
+export function useGetOwnerDashboardLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
-    ListOwnerRestaurantsQuery,
-    ListOwnerRestaurantsQueryVariables
+    GetOwnerDashboardQuery,
+    GetOwnerDashboardQueryVariables
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<
-    ListOwnerRestaurantsQuery,
-    ListOwnerRestaurantsQueryVariables
-  >(ListOwnerRestaurantsDocument, options);
+    GetOwnerDashboardQuery,
+    GetOwnerDashboardQueryVariables
+  >(GetOwnerDashboardDocument, options);
 }
-export type ListOwnerRestaurantsQueryHookResult = ReturnType<
-  typeof useListOwnerRestaurantsQuery
+export type GetOwnerDashboardQueryHookResult = ReturnType<
+  typeof useGetOwnerDashboardQuery
 >;
-export type ListOwnerRestaurantsLazyQueryHookResult = ReturnType<
-  typeof useListOwnerRestaurantsLazyQuery
+export type GetOwnerDashboardLazyQueryHookResult = ReturnType<
+  typeof useGetOwnerDashboardLazyQuery
 >;
-export type ListOwnerRestaurantsQueryResult = Apollo.QueryResult<
-  ListOwnerRestaurantsQuery,
-  ListOwnerRestaurantsQueryVariables
+export type GetOwnerDashboardQueryResult = Apollo.QueryResult<
+  GetOwnerDashboardQuery,
+  GetOwnerDashboardQueryVariables
 >;
 export const GetRestaurantDocument = gql`
   query getRestaurant($id: ID!) {
@@ -666,14 +704,11 @@ export const GetRestaurantDocument = gql`
       name
       rating
       reviews {
-        id
-        rating
-        comment
-        visitedAt
-        reply
+        ...Review
       }
     }
   }
+  ${ReviewFragmentDoc}
 `;
 
 /**

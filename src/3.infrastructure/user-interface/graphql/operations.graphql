@@ -46,10 +46,16 @@ query listRestaurants {
   }
 }
 
-query listOwnerRestaurants($ownerId: ID!) {
+query getOwnerDashboard($ownerId: ID!) {
   restaurants(ownerId: $ownerId) {
     id
     name
+  }
+
+  me {
+    pendingReviews {
+      ...Review
+    }
   }
 }
 
@@ -59,11 +65,15 @@ query getRestaurant($id: ID!) {
     name
     rating
     reviews {
-      id
-      rating
-      comment
-      visitedAt
-      reply
+      ...Review
     }
   }
+}
+
+fragment Review on Review {
+  id
+  rating
+  comment
+  visitedAt
+  reply
 }

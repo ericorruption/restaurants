@@ -1,11 +1,16 @@
 import { FormEvent, FunctionComponent, useState } from "react";
 
-import { useCreateRestaurantMutation } from "../graphql/generated-types-and-hooks";
+import {
+  GetOwnerDashboardDocument,
+  useCreateRestaurantMutation,
+} from "../graphql/generated-types-and-hooks";
 
-// TODO refresh list, success message
+// TODO success message
 export const RestaurantForm: FunctionComponent = () => {
   const [name, setName] = useState("");
-  const [submit] = useCreateRestaurantMutation();
+  const [submit] = useCreateRestaurantMutation({
+    refetchQueries: [GetOwnerDashboardDocument],
+  });
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
