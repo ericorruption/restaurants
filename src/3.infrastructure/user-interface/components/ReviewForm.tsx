@@ -41,7 +41,7 @@ export const ReviewForm: FunctionComponent<{ restaurantId: RestaurantId }> = ({
       variables: {
         input: {
           restaurantId,
-          rating: 5,
+          rating,
           comment: event.currentTarget.comment.value,
           visitedAt: visitDate,
         },
