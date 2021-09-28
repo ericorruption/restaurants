@@ -93,6 +93,7 @@ export type Restaurant = {
   name: Scalars["String"];
   ownerId: Scalars["ID"];
   rating?: Maybe<Scalars["Int"]>;
+  reviews: Array<Review>;
 };
 
 export type Review = {
@@ -100,6 +101,7 @@ export type Review = {
   comment: Scalars["String"];
   id: Scalars["ID"];
   rating: Scalars["Int"];
+  reply?: Maybe<Scalars["String"]>;
   restaurantId: Scalars["ID"];
   visitedAt: Scalars["Date"];
 };
@@ -160,13 +162,44 @@ export type LogInMutation = {
   login?: Maybe<{ __typename?: "AuthPayload"; token: string }>;
 };
 
+export type GetUserQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetUserQuery = {
+  __typename?: "Query";
+  me?: Maybe<{
+    __typename?: "User";
+    id: string;
+    name?: Maybe<string>;
+    email: string;
+    role: Role;
+  }>;
+};
+
 export type CreateRestaurantMutationVariables = Exact<{
   input: CreateRestaurantInput;
 }>;
 
 export type CreateRestaurantMutation = {
   __typename?: "Mutation";
-  createRestaurant: { __typename?: "Restaurant"; id: string };
+  createRestaurant: { __typename?: "Restaurant"; id: string; name: string };
+};
+
+export type ReviewRestaurantMutationVariables = Exact<{
+  input: ReviewRestaurantInput;
+}>;
+
+export type ReviewRestaurantMutation = {
+  __typename?: "Mutation";
+  reviewRestaurant: { __typename?: "Review"; id: string };
+};
+
+export type ReplyToReviewMutationVariables = Exact<{
+  input: ReplyToReviewInput;
+}>;
+
+export type ReplyToReviewMutation = {
+  __typename?: "Mutation";
+  replyToReview: { __typename?: "ReplyToReviewOutput"; success: boolean };
 };
 
 export type ListRestaurantsQueryVariables = Exact<{ [key: string]: never }>;
@@ -196,19 +229,19 @@ export type GetRestaurantQueryVariables = Exact<{
 
 export type GetRestaurantQuery = {
   __typename?: "Query";
-  restaurant?: Maybe<{ __typename?: "Restaurant"; id: string; name: string }>;
-};
-
-export type GetUserQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetUserQuery = {
-  __typename?: "Query";
-  me?: Maybe<{
-    __typename?: "User";
+  restaurant?: Maybe<{
+    __typename?: "Restaurant";
     id: string;
-    name?: Maybe<string>;
-    email: string;
-    role: Role;
+    name: string;
+    rating?: Maybe<number>;
+    reviews: Array<{
+      __typename?: "Review";
+      id: string;
+      rating: number;
+      comment: string;
+      visitedAt: any;
+      reply?: Maybe<string>;
+    }>;
   }>;
 };
 
@@ -307,10 +340,61 @@ export type LogInMutationOptions = Apollo.BaseMutationOptions<
   LogInMutation,
   LogInMutationVariables
 >;
+export const GetUserDocument = gql`
+  query getUser {
+    me {
+      id
+      name
+      email
+      role
+    }
+  }
+`;
+
+/**
+ * __useGetUserQuery__
+ *
+ * To run a query within a React component, call `useGetUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetUserQuery(
+  baseOptions?: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(
+    GetUserDocument,
+    options
+  );
+}
+export function useGetUserLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(
+    GetUserDocument,
+    options
+  );
+}
+export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
+export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
+export type GetUserQueryResult = Apollo.QueryResult<
+  GetUserQuery,
+  GetUserQueryVariables
+>;
 export const CreateRestaurantDocument = gql`
   mutation createRestaurant($input: CreateRestaurantInput!) {
     createRestaurant(input: $input) {
       id
+      name
     }
   }
 `;
@@ -356,6 +440,106 @@ export type CreateRestaurantMutationResult =
 export type CreateRestaurantMutationOptions = Apollo.BaseMutationOptions<
   CreateRestaurantMutation,
   CreateRestaurantMutationVariables
+>;
+export const ReviewRestaurantDocument = gql`
+  mutation reviewRestaurant($input: ReviewRestaurantInput!) {
+    reviewRestaurant(input: $input) {
+      id
+    }
+  }
+`;
+export type ReviewRestaurantMutationFn = Apollo.MutationFunction<
+  ReviewRestaurantMutation,
+  ReviewRestaurantMutationVariables
+>;
+
+/**
+ * __useReviewRestaurantMutation__
+ *
+ * To run a mutation, you first call `useReviewRestaurantMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useReviewRestaurantMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [reviewRestaurantMutation, { data, loading, error }] = useReviewRestaurantMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useReviewRestaurantMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ReviewRestaurantMutation,
+    ReviewRestaurantMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    ReviewRestaurantMutation,
+    ReviewRestaurantMutationVariables
+  >(ReviewRestaurantDocument, options);
+}
+export type ReviewRestaurantMutationHookResult = ReturnType<
+  typeof useReviewRestaurantMutation
+>;
+export type ReviewRestaurantMutationResult =
+  Apollo.MutationResult<ReviewRestaurantMutation>;
+export type ReviewRestaurantMutationOptions = Apollo.BaseMutationOptions<
+  ReviewRestaurantMutation,
+  ReviewRestaurantMutationVariables
+>;
+export const ReplyToReviewDocument = gql`
+  mutation replyToReview($input: ReplyToReviewInput!) {
+    replyToReview(input: $input) {
+      success
+    }
+  }
+`;
+export type ReplyToReviewMutationFn = Apollo.MutationFunction<
+  ReplyToReviewMutation,
+  ReplyToReviewMutationVariables
+>;
+
+/**
+ * __useReplyToReviewMutation__
+ *
+ * To run a mutation, you first call `useReplyToReviewMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useReplyToReviewMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [replyToReviewMutation, { data, loading, error }] = useReplyToReviewMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useReplyToReviewMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ReplyToReviewMutation,
+    ReplyToReviewMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    ReplyToReviewMutation,
+    ReplyToReviewMutationVariables
+  >(ReplyToReviewDocument, options);
+}
+export type ReplyToReviewMutationHookResult = ReturnType<
+  typeof useReplyToReviewMutation
+>;
+export type ReplyToReviewMutationResult =
+  Apollo.MutationResult<ReplyToReviewMutation>;
+export type ReplyToReviewMutationOptions = Apollo.BaseMutationOptions<
+  ReplyToReviewMutation,
+  ReplyToReviewMutationVariables
 >;
 export const ListRestaurantsDocument = gql`
   query listRestaurants {
@@ -480,6 +664,14 @@ export const GetRestaurantDocument = gql`
     restaurant(id: $id) {
       id
       name
+      rating
+      reviews {
+        id
+        rating
+        comment
+        visitedAt
+        reply
+      }
     }
   }
 `;
@@ -533,54 +725,4 @@ export type GetRestaurantLazyQueryHookResult = ReturnType<
 export type GetRestaurantQueryResult = Apollo.QueryResult<
   GetRestaurantQuery,
   GetRestaurantQueryVariables
->;
-export const GetUserDocument = gql`
-  query getUser {
-    me {
-      id
-      name
-      email
-      role
-    }
-  }
-`;
-
-/**
- * __useGetUserQuery__
- *
- * To run a query within a React component, call `useGetUserQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetUserQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetUserQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(
-    GetUserDocument,
-    options
-  );
-}
-export function useGetUserLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(
-    GetUserDocument,
-    options
-  );
-}
-export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
-export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
-export type GetUserQueryResult = Apollo.QueryResult<
-  GetUserQuery,
-  GetUserQueryVariables
 >;

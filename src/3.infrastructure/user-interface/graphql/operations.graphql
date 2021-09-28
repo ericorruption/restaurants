@@ -10,10 +10,31 @@ mutation logIn($email: String!, $password: String!) {
   }
 }
 
+query getUser {
+  me {
+    id
+    name
+    email
+    role
+  }
+}
+
 mutation createRestaurant($input: CreateRestaurantInput!) {
   createRestaurant(input: $input) {
     id
-    # name
+    name
+  }
+}
+
+mutation reviewRestaurant($input: ReviewRestaurantInput!) {
+  reviewRestaurant(input: $input) {
+    id
+  }
+}
+
+mutation replyToReview($input: ReplyToReviewInput!) {
+  replyToReview(input: $input) {
+    success
   }
 }
 
@@ -36,14 +57,13 @@ query getRestaurant($id: ID!) {
   restaurant(id: $id) {
     id
     name
-  }
-}
-
-query getUser {
-  me {
-    id
-    name
-    email
-    role
+    rating
+    reviews {
+      id
+      rating
+      comment
+      visitedAt
+      reply
+    }
   }
 }

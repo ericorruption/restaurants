@@ -2,6 +2,7 @@ import type { FunctionComponent } from "react";
 import { useParams } from "react-router";
 
 import type { RestaurantId } from "../../../1.domain/Restaurant";
+import type { NumberBetween1And5 } from "../../../1.domain/shared-kernel";
 import { Review } from "../components/Review";
 import { ReviewForm } from "../components/ReviewForm";
 import { StarRating } from "../components/StarRating";
@@ -40,41 +41,54 @@ export const Restaurant: FunctionComponent = () => {
     );
   }
 
+  // TODO move to back-end? more criteria (E.g. most recent)
+  const sortedReviews = [...data.restaurant.reviews].sort(
+    (a, b) => b.rating - a.rating
+  );
+
+  const highestRatedReview = sortedReviews[0];
+  const lowestRatedReview = sortedReviews[sortedReviews.length - 1];
+
   return (
     <main>
       <h1 className="restaurant-page-title">{data.restaurant.name}</h1>
 
       <p className="restaurant-page-average-rating">
-        {/* 1. Overall average rating */}
         <span className="visually-hidden">Average rating:</span>
-        <StarRating value={5} />
+        {data.restaurant.rating && (
+          <StarRating value={data.restaurant.rating as NumberBetween1And5} />
+        )}
       </p>
 
       <div className="restaurant-page-grid">
         <div className="restaurant-page-grid--1">
-          <h2>Highest rated review</h2>
-          {/* 2. Highest rated review */}
-          <Review
-            visitedAt={new Date()}
-            comment="I love this restaurant it's so good!"
-            rating={5}
-          />
+          {sortedReviews.length > 0 ? (
+            <>
+              <h2>Highest rated review</h2>
+              {highestRatedReview && <Review {...highestRatedReview} />}
 
-          <h2>Lowest rated review</h2>
-          {/* 3. Lowest rated review */}
-          <Review
-            visitedAt={new Date("2019-08-11")}
-            comment="This was horrible!"
-            rating={1}
-          />
+              <h2>Lowest rated review</h2>
+
+              {lowestRatedReview && <Review {...lowestRatedReview} />}
+            </>
+          ) : (
+            <p>
+              This restaurant doesn't have any reviews yet.
+              <br />
+              <strong>Write the first!</strong>
+            </p>
+          )}
         </div>
+
         <div className="restaurant-page-grid--2">
           <ReviewForm restaurantId={restaurantId} />
 
-          <h2>Latest reviews</h2>
           {/* 4. Last N reviews with rate, comment and reply */}
-          {/* TODO empty state */}
-          {/* TODO */}
+          {data.restaurant.reviews.length > 0 && <h2>Latest reviews</h2>}
+          {data.restaurant.reviews.length > 0 &&
+            data.restaurant.reviews.map((review) => (
+              <Review key={review.id} {...review} />
+            ))}
         </div>
       </div>
     </main>

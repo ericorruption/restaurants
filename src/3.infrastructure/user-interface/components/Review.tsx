@@ -5,27 +5,31 @@ import type { Review as ReviewType } from "../graphql/generated-types-and-hooks"
 
 import { StarRating } from "./StarRating";
 
-interface Props extends Pick<ReviewType, "rating" | "comment"> {
-  visitedAt: Date;
-}
+type Props = Omit<ReviewType, "restaurantId">;
 
 export const Review: FunctionComponent<Props> = ({
   rating,
   comment,
   visitedAt,
-}) => {
-  const castRating = rating as NumberBetween1And5;
-
-  return (
+  reply,
+}) => (
+  <>
     <article>
       <p>{comment}</p>
       <p>
         On{" "}
-        <time dateTime={visitedAt.toISOString()}>
-          {visitedAt.toLocaleDateString()}
+        <time dateTime={new Date(visitedAt).toISOString()}>
+          {new Date(visitedAt).toLocaleDateString()}
         </time>
       </p>
-      <StarRating value={castRating} />
+      <StarRating value={rating as NumberBetween1And5} />
     </article>
-  );
-};
+
+    {reply && (
+      <article>
+        <p>Reply from restaurant owner:</p>
+        <blockquote>{reply}</blockquote>
+      </article>
+    )}
+  </>
+);
