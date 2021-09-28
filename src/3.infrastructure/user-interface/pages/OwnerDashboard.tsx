@@ -1,6 +1,7 @@
-import type { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import { Link } from "react-router-dom";
 
+import { RestaurantForm } from "../components/RestaurantForm";
 import { useListOwnerRestaurantsQuery } from "../graphql/generated-types-and-hooks";
 import { useUser } from "../UserContext";
 
@@ -27,7 +28,6 @@ export const OwnerDashboard: FunctionComponent = () => {
             .filter((restaurant) => restaurant)
             .map((restaurant) => (
               <li key={restaurant.id}>
-                {/* TODO beautiful pic */}
                 <Link to={`/restaurants/${restaurant.id}`}>
                   {restaurant.name}
                 </Link>
@@ -36,8 +36,21 @@ export const OwnerDashboard: FunctionComponent = () => {
         </ul>
       )}
       {data && !data.restaurants.length && <p>No restaurants</p>}
+      <AddRestaurantButton />
 
       <h2>Pending reviews</h2>
     </main>
+  );
+};
+
+const AddRestaurantButton: FunctionComponent = () => {
+  const [showForm, setShowForm] = useState(false);
+
+  return showForm ? (
+    <RestaurantForm />
+  ) : (
+    <button type="button" onClick={() => setShowForm(true)}>
+      Add restaurant
+    </button>
   );
 };
