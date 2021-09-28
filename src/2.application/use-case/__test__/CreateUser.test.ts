@@ -1,4 +1,4 @@
-import { CreateUser } from "../auth/CreateUser";
+import { CreateUser } from "../user/CreateUser";
 
 import { MockAuthenticationService } from "./MockAuthenticationService";
 import { MockUserRepository } from "./repository/MockUserRepository";

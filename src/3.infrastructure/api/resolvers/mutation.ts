@@ -1,4 +1,4 @@
-import type { Input } from "../../../2.application/use-case/auth/CreateUser";
+import type { Input } from "../../../2.application/use-case/user/CreateUser";
 import type { MutationResolvers } from "../generated.types";
 
 export const mutationResolvers: MutationResolvers = {

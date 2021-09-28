@@ -1,9 +1,9 @@
 import type { AuthenticationService } from "./AuthenticationService";
-import type { CreateUser } from "./use-case/auth/CreateUser";
+import type { CreateUser } from "./use-case/user/CreateUser";
 import type { LogIn } from "./use-case/auth/LogIn";
 import type { CreateRestaurant } from "./use-case/restaurant/CreateRestaurant";
 import type { GetRestaurant } from "./use-case/restaurant/GetRestaurant";
-import type { GetUser } from "./use-case/GetUser";
+import type { GetUser } from "./use-case/user/GetUser";
 import type { ListOwnerRestaurants } from "./use-case/restaurant/ListOwnerRestaurants";
 import type { ListRestaurants } from "./use-case/restaurant/ListRestaurants";
 import type { ReplyToReview } from "./use-case/ReplyToReview";

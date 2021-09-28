@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 
 import { Application } from "../../2.application/Application";
 import { AuthorizationService } from "../../2.application/AuthorizationService";
-import { CreateUser } from "../../2.application/use-case/auth/CreateUser";
+import { CreateUser } from "../../2.application/use-case/user/CreateUser";
 import { LogIn } from "../../2.application/use-case/auth/LogIn";
 import { CreateRestaurant } from "../../2.application/use-case/restaurant/CreateRestaurant";
 import { ListRestaurants } from "../../2.application/use-case/restaurant/ListRestaurants";
@@ -14,7 +14,7 @@ import { PrismaReviewRepository } from "../repository/PrismaReviewRepository";
 import { ReplyToReview } from "../../2.application/use-case/ReplyToReview";
 import { PrismaReplyRepository } from "../repository/PrismaReplyRepository";
 import { GetRestaurant } from "../../2.application/use-case/restaurant/GetRestaurant";
-import { GetUser } from "../../2.application/use-case/GetUser";
+import { GetUser } from "../../2.application/use-case/user/GetUser";
 import { ListOwnerRestaurants } from "../../2.application/use-case/restaurant/ListOwnerRestaurants";
 
 const JWT_SECRET = process.env.JWT_SECRET;

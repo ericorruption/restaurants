@@ -1,6 +1,5 @@
-import type { LoggedUser } from "../model/LoggedUser";
-
-import type { UseCase } from "./UseCase";
+import type { LoggedUser } from "../../model/LoggedUser";
+import type { UseCase } from "../UseCase";
 
 interface Input {
   user?: LoggedUser;
