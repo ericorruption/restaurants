@@ -27,7 +27,7 @@ export const OwnerDashboard: FunctionComponent = () => {
           <h2>My restaurants</h2>
           {loading && <p>Loading...</p>}
           {error && <p>Error: {error.message}</p>}
-          {data && data.restaurants.length && (
+          {data && data.restaurants.length > 0 && (
             <ul>
               {[...data.restaurants]
                 .filter((restaurant) => restaurant)
@@ -40,7 +40,7 @@ export const OwnerDashboard: FunctionComponent = () => {
                 ))}
             </ul>
           )}
-          {data && !data.restaurants.length && <p>No restaurants</p>}
+          {data && data.restaurants.length === 0 && <p>No restaurants</p>}
           <AddRestaurantButton />
         </div>
         <div>

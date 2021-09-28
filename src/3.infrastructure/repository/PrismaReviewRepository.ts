@@ -1,8 +1,9 @@
 import type { PrismaClient, Review as DbReview } from "@prisma/client";
 
-import type { RestaurantId } from "../../1.domain/Restaurant";
+import type { OwnerId, RestaurantId } from "../../1.domain/Restaurant";
 import type { Review, ReviewId } from "../../1.domain/Review";
 import { Rating } from "../../1.domain/shared-kernel";
+import type { ReviewModel } from "../../2.application/model/Review";
 import type { ReviewRepository } from "../../2.application/repository/ReviewRepository";
 
 export class PrismaReviewRepository implements ReviewRepository {
@@ -20,10 +21,31 @@ export class PrismaReviewRepository implements ReviewRepository {
     return this.toDomainReview(review);
   }
 
-  async getByRestaurantId(restaurantId: RestaurantId): Promise<Review[]> {
+  async getByRestaurantId(restaurantId: RestaurantId): Promise<ReviewModel[]> {
     const reviews = await this.prisma.review.findMany({
       where: { restaurantId },
       orderBy: { createdAt: "desc" },
+      include: {
+        Reply: true,
+      },
+    });
+
+    return reviews.map((review) => ({
+      ...this.toDomainReview(review),
+      reply: review.Reply?.comment ?? undefined,
+    }));
+  }
+
+  async getPendingReviewsByOwnerId(ownerId: OwnerId): Promise<Review[]> {
+    const reviews = await this.prisma.review.findMany({
+      where: {
+        replyId: null,
+        AND: {
+          Restaurant: {
+            ownerId,
+          },
+        },
+      },
     });
 
     return reviews.map((review) => this.toDomainReview(review));

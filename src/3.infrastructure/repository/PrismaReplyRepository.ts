@@ -8,8 +8,14 @@ export class PrismaReplyRepository implements ReplyRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
   async findByReviewId(reviewId: ReviewId): Promise<Reply | undefined> {
-    const reply = await this.prisma.reply.findUnique({
-      where: { reviewId },
+    const reply = await this.prisma.reply.findFirst({
+      include: {
+        Review: {
+          where: {
+            id: reviewId,
+          },
+        },
+      },
     });
 
     if (!reply) {

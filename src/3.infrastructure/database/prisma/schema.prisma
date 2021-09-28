@@ -34,11 +34,16 @@ model Review {
   Restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
   restaurantId String
   userId       String
+  replyId      String?
+  Reply        Reply?
 }
 
 model Reply {
-  reviewId String @id
-  comment  String
+  id        String   @id @default(uuid())
+  reviewId  String
+  review    Review   @relation(fields: [reviewId], references: [id])
+  comment   String
+  createdAt DateTime @default(now())
 }
 
 enum Role {

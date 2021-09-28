@@ -11,4 +11,5 @@ export interface ReviewModel {
   rating: Rating;
   visitedAt: DateNotInTheFuture;
   comment: string;
+  reply?: string;
 }
