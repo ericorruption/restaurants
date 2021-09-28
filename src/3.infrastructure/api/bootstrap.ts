@@ -72,7 +72,7 @@ export const application = new Application(
       replyRepositoryImplementation,
       authorizationService
     ),
-    getRestaurant: new GetRestaurant(restaurantRepositoryImplementation),
+    getRestaurant: new GetRestaurant(restaurantService),
     getUser: new GetUser(),
     listOwnerRestaurants: new ListOwnerRestaurants(
       restaurantRepositoryImplementation

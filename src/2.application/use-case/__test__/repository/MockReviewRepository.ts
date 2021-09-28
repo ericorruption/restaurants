@@ -5,6 +5,14 @@ import type { ReviewRepository } from "../../../repository/ReviewRepository";
 
 export class MockReviewRepository implements ReviewRepository {
   constructor(private reviews: Review[] = []) {}
+  getByRestaurantId(restaurantId: string): Promise<Review[]> {
+    const reviews = this.reviews.filter(
+      (review) => review.restaurantId === restaurantId
+    );
+
+    return Promise.resolve(reviews);
+  }
+
   getAverageRatingGroupByRestaurant(): Promise<Record<RestaurantId, Rating>> {
     const initialState: Record<RestaurantId, Rating> = {};
     const result: Record<RestaurantId, Rating> = this.reviews.reduce(

@@ -1,7 +1,8 @@
-import type { Restaurant, RestaurantId } from "../../../1.domain/Restaurant";
+import type { RestaurantId } from "../../../1.domain/Restaurant";
 import { Unauthorized } from "../../Exceptions";
 import type { LoggedUser } from "../../model/LoggedUser";
-import type { RestaurantRepository } from "../../repository/RestaurantRepository";
+import type { RestaurantWithReviews } from "../../model/Restaurant";
+import type { RestaurantService } from "../../RestaurantService";
 import type { UseCase } from "../UseCase";
 
 interface Input {
@@ -9,15 +10,14 @@ interface Input {
   restaurantId: RestaurantId;
 }
 
-// TODO guard against non-existing restaurant
 export class GetRestaurant implements UseCase {
-  constructor(private readonly restaurantRepository: RestaurantRepository) {}
+  constructor(private readonly restaurantService: RestaurantService) {}
 
-  async execute(input: Input): Promise<Restaurant> {
+  async execute(input: Input): Promise<RestaurantWithReviews> {
     if (!input.user) {
       throw new Unauthorized();
     }
 
-    return this.restaurantRepository.findById(input.restaurantId);
+    return this.restaurantService.getByIdWithReviews(input.restaurantId);
   }
 }

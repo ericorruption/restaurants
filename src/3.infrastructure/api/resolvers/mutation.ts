@@ -28,6 +28,7 @@ export const mutationResolvers: MutationResolvers = {
 
     return {
       ...newRestaurant,
+      reviews: [],
     };
   },
   reviewRestaurant: async (_, args, context) => {
