@@ -5,11 +5,11 @@
   "description": "",
   "scripts": {
     "test": "react-scripts test --env=node",
-    "start": "concurrently npm:server npm:client",
+    "dev": "concurrently npm:server npm:client",
     "server": "nodemon src/0.bin/server.ts",
     "client": "react-scripts start",
     "build:client": "react-scripts build",
-    "start:production": "ts-node --transpile-only src/0.bin/server.ts",
+    "start": "ts-node --transpile-only src/0.bin/server.ts",
     "script:codegen": "graphql-codegen --config codegen.yml",
     "lint": "npx eslint src/*",
     "typecheck": "tsc",
