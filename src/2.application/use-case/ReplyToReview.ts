@@ -33,7 +33,7 @@ export class ReplyToReview implements UseCase {
     }
 
     const restaurants = await this.restaurantRepository.findByOwnerId(
-      review.userId
+      input.user.id
     );
     const restaurantIds = restaurants.map((restaurant) => restaurant.id);
 
