@@ -11,6 +11,7 @@
 2. Navigate to the project folder
 3. Copy and rename `.env.example` to `.env`, then fill out the remaining credentials
 4. Type and run `npm install`.
+5. Run `npx prisma migrate dev` to set up the database.
 
 ## Running
 
