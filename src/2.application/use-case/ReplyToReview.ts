@@ -3,6 +3,7 @@ import type { AuthorizationService } from "../AuthorizationService";
 import { Unauthorized } from "../Exceptions";
 import type { LoggedUser } from "../model/LoggedUser";
 import type { ReplyRepository } from "../repository/ReplyRepository";
+import type { RestaurantRepository } from "../repository/RestaurantRepository";
 import type { ReviewRepository } from "../repository/ReviewRepository";
 
 import type { UseCase } from "./UseCase";
@@ -17,6 +18,7 @@ export class ReplyToReview implements UseCase {
   constructor(
     private readonly reviewRepository: ReviewRepository,
     private readonly replyRepository: ReplyRepository,
+    private readonly restaurantRepository: RestaurantRepository,
     private readonly authorizationService: AuthorizationService
   ) {}
 
@@ -25,8 +27,17 @@ export class ReplyToReview implements UseCase {
 
     if (
       !input.user ||
-      !this.authorizationService.isAllowedToReplyToReview(input.user, review)
+      !this.authorizationService.isAllowedToReplyToReview(input.user)
     ) {
+      throw new Unauthorized();
+    }
+
+    const restaurants = await this.restaurantRepository.findByOwnerId(
+      review.userId
+    );
+    const restaurantIds = restaurants.map((restaurant) => restaurant.id);
+
+    if (!restaurantIds.includes(review.restaurantId)) {
       throw new Unauthorized();
     }
 

@@ -71,6 +71,7 @@ export const application = new Application(
     replyToReview: new ReplyToReview(
       reviewRepositoryImplementation,
       replyRepositoryImplementation,
+      restaurantRepositoryImplementation,
       authorizationService
     ),
     getRestaurant: new GetRestaurant(restaurantService),
