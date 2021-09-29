@@ -3,6 +3,7 @@ import { AuthorizationService } from "../../AuthorizationService";
 import { ReplyToReview } from "../ReplyToReview";
 
 import { MockReplyRepository } from "./repository/MockReplyRepository";
+import { MockRestaurantRepository } from "./repository/MockRestaurantRepository";
 import { MockReviewRepository } from "./repository/MockReviewRepository";
 
 test("ReplyToReview use case", async () => {
@@ -17,9 +18,17 @@ test("ReplyToReview use case", async () => {
       visitedAt: new Date(),
     },
   ]);
+  const mockRestaurantRepository = new MockRestaurantRepository([
+    {
+      id: "1",
+      ownerId: "ownerId",
+      name: "name",
+    },
+  ]);
   const replyToReview = new ReplyToReview(
     mockReviewRepository,
     mockReplyRepository,
+    mockRestaurantRepository,
     new AuthorizationService()
   );
 
@@ -28,7 +37,7 @@ test("ReplyToReview use case", async () => {
       reviewId: "1",
       reply: "We'll improve our service.",
       user: {
-        id: "userId",
+        id: "ownerId",
         email: "",
         role: "owner",
       },
