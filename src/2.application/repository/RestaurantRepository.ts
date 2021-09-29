@@ -6,6 +6,4 @@ export interface RestaurantRepository {
   findById(restaurantId: RestaurantId): Promise<Restaurant>;
   findByOwnerId(ownerId: UserId): Promise<Restaurant[]>;
   persist(restaurant: Restaurant): Promise<void>;
-  // TODO move to query class
-  // find by ownerId
 }

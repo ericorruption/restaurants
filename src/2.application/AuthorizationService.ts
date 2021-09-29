@@ -1,5 +1,3 @@
-import type { Review } from "../1.domain/Review";
-
 import type { LoggedUser } from "./model/LoggedUser";
 
 export class AuthorizationService {
@@ -15,10 +13,7 @@ export class AuthorizationService {
     return user.role === "user";
   }
 
-  isAllowedToReplyToReview(user: LoggedUser, review: Review): boolean {
-    // TODO user restaurants includes review.restaurantId
-    // OR
-    // restaurant.ownerId === user.id (using a restaurants service)
+  isAllowedToReplyToReview(user: LoggedUser): boolean {
     return user.role === "owner";
   }
 }

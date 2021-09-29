@@ -2,7 +2,6 @@ import { createContext, FunctionComponent, useContext } from "react";
 
 import { useGetUserQuery, User } from "./graphql/generated-types-and-hooks";
 
-// TODO enrich if needed
 type IUserContext = User | undefined;
 
 const UserContext = createContext<IUserContext>(undefined);

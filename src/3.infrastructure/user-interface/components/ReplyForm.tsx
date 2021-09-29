@@ -15,7 +15,6 @@ export const ReplyForm: FunctionComponent<{ reviewId: ReviewId }> = ({
   const user = useUser();
   // TODO data, loading, error
   const [replyToReview] = useReplyToReviewMutation({
-    // TODO
     refetchQueries: [GetOwnerDashboardDocument],
   });
 

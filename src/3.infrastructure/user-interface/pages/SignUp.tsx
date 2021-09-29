@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment */
 import type { FormEvent, FunctionComponent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { Role, useSignUpMutation } from "../graphql/generated-types-and-hooks";
 
 export const SignUp: FunctionComponent = () => {
   const [signUp, { data, error }] = useSignUpMutation();
+  const history = useHistory();
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -19,7 +20,6 @@ export const SignUp: FunctionComponent = () => {
       return;
     }
 
-    // TODO if successful, redirect to the home page
     await signUp({
       variables: {
         input: {
@@ -28,6 +28,10 @@ export const SignUp: FunctionComponent = () => {
           role: isOwner ? Role.Owner : undefined,
         },
       },
+    });
+
+    history.push("/", {
+      success: true,
     });
   };
 
