@@ -9,6 +9,7 @@ import type { ListRestaurants } from "./use-case/restaurant/ListRestaurants";
 import type { ReplyToReview } from "./use-case/ReplyToReview";
 import type { ReviewRestaurant } from "./use-case/restaurant/ReviewRestaurant";
 import type { ListPendingReviews } from "./use-case/ListPendingReviews";
+import type { ManagementService } from "./ManagementService";
 
 interface UseCases {
   createUser: CreateUser;
@@ -26,6 +27,7 @@ interface UseCases {
 export class Application {
   constructor(
     public useCases: UseCases,
-    public authenticationService: AuthenticationService
+    public authenticationService: AuthenticationService,
+    public managementService: ManagementService
   ) {}
 }

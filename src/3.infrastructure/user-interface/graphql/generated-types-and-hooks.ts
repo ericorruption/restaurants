@@ -32,17 +32,61 @@ export type CreateRestaurantInput = {
   name: Scalars["String"];
 };
 
+export type DeleteReplyOutput = {
+  __typename?: "DeleteReplyOutput";
+  success: Scalars["Boolean"];
+};
+
+export type DeleteRestaurantOutput = {
+  __typename?: "DeleteRestaurantOutput";
+  success: Scalars["Boolean"];
+};
+
+export type DeleteReviewOutput = {
+  __typename?: "DeleteReviewOutput";
+  success: Scalars["Boolean"];
+};
+
+export type DeleteUserOutput = {
+  __typename?: "DeleteUserOutput";
+  success: Scalars["Boolean"];
+};
+
 export type Mutation = {
   __typename?: "Mutation";
   createRestaurant: Restaurant;
+  deleteReply: DeleteReplyOutput;
+  deleteRestaurant: DeleteRestaurantOutput;
+  deleteReview: DeleteReviewOutput;
+  deleteUser: DeleteUserOutput;
   login?: Maybe<AuthPayload>;
   replyToReview: ReplyToReviewOutput;
   reviewRestaurant: Review;
   signUp: SignUpOutput;
+  updateReply: UpdateReplyOutput;
+  updateRestaurant: Restaurant;
+  updateReview: Review;
+  updateUser: UpdateUserOutput;
 };
 
 export type MutationCreateRestaurantArgs = {
   input: CreateRestaurantInput;
+};
+
+export type MutationDeleteReplyArgs = {
+  replyId: Scalars["ID"];
+};
+
+export type MutationDeleteRestaurantArgs = {
+  restaurantId: Scalars["ID"];
+};
+
+export type MutationDeleteReviewArgs = {
+  reviewId: Scalars["ID"];
+};
+
+export type MutationDeleteUserArgs = {
+  userId: Scalars["ID"];
 };
 
 export type MutationLoginArgs = {
@@ -60,6 +104,26 @@ export type MutationReviewRestaurantArgs = {
 
 export type MutationSignUpArgs = {
   input: SignUpInput;
+};
+
+export type MutationUpdateReplyArgs = {
+  input: UpdateReplyInput;
+  replyId: Scalars["ID"];
+};
+
+export type MutationUpdateRestaurantArgs = {
+  input: UpdateRestaurantInput;
+  restaurantId: Scalars["ID"];
+};
+
+export type MutationUpdateReviewArgs = {
+  input: UpdateReviewInput;
+  reviewId: Scalars["ID"];
+};
+
+export type MutationUpdateUserArgs = {
+  input: UpdateUserInput;
+  userId: Scalars["ID"];
 };
 
 export type Query = {
@@ -132,6 +196,32 @@ export type SignUpInput = {
 
 export type SignUpOutput = {
   __typename?: "SignUpOutput";
+  success: Scalars["Boolean"];
+};
+
+export type UpdateReplyInput = {
+  reply: Scalars["String"];
+};
+
+export type UpdateReplyOutput = {
+  __typename?: "UpdateReplyOutput";
+  success: Scalars["Boolean"];
+};
+
+export type UpdateRestaurantInput = {
+  name: Scalars["String"];
+};
+
+export type UpdateReviewInput = {
+  comment: Scalars["String"];
+};
+
+export type UpdateUserInput = {
+  name: Scalars["String"];
+};
+
+export type UpdateUserOutput = {
+  __typename?: "UpdateUserOutput";
   success: Scalars["Boolean"];
 };
 

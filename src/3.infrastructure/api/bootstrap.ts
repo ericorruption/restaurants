@@ -18,6 +18,7 @@ import { GetUser } from "../../2.application/use-case/user/GetUser";
 import { ListOwnerRestaurants } from "../../2.application/use-case/restaurant/ListOwnerRestaurants";
 import { RestaurantService } from "../../2.application/RestaurantService";
 import { ListPendingReviews } from "../../2.application/use-case/ListPendingReviews";
+import { ConcreteManagementService } from "../ConcreteManagementService";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -44,6 +45,10 @@ const replyRepositoryImplementation = new PrismaReplyRepository(prismaClient);
 const restaurantService = new RestaurantService(
   restaurantRepositoryImplementation,
   reviewRepositoryImplementation
+);
+
+const managementServiceImplementation = new ConcreteManagementService(
+  prismaClient
 );
 
 export const application = new Application(
@@ -81,5 +86,6 @@ export const application = new Application(
     ),
     listPendingReviews: new ListPendingReviews(reviewRepositoryImplementation),
   },
-  authenticationServiceImplementation
+  authenticationServiceImplementation,
+  managementServiceImplementation
 );

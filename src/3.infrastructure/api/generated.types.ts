@@ -39,17 +39,61 @@ export type CreateRestaurantInput = {
   name: Scalars["String"];
 };
 
+export type DeleteReplyOutput = {
+  __typename?: "DeleteReplyOutput";
+  success: Scalars["Boolean"];
+};
+
+export type DeleteRestaurantOutput = {
+  __typename?: "DeleteRestaurantOutput";
+  success: Scalars["Boolean"];
+};
+
+export type DeleteReviewOutput = {
+  __typename?: "DeleteReviewOutput";
+  success: Scalars["Boolean"];
+};
+
+export type DeleteUserOutput = {
+  __typename?: "DeleteUserOutput";
+  success: Scalars["Boolean"];
+};
+
 export type Mutation = {
   __typename?: "Mutation";
   createRestaurant: Restaurant;
+  deleteReply: DeleteReplyOutput;
+  deleteRestaurant: DeleteRestaurantOutput;
+  deleteReview: DeleteReviewOutput;
+  deleteUser: DeleteUserOutput;
   login?: Maybe<AuthPayload>;
   replyToReview: ReplyToReviewOutput;
   reviewRestaurant: Review;
   signUp: SignUpOutput;
+  updateReply: UpdateReplyOutput;
+  updateRestaurant: Restaurant;
+  updateReview: Review;
+  updateUser: UpdateUserOutput;
 };
 
 export type MutationCreateRestaurantArgs = {
   input: CreateRestaurantInput;
+};
+
+export type MutationDeleteReplyArgs = {
+  replyId: Scalars["ID"];
+};
+
+export type MutationDeleteRestaurantArgs = {
+  restaurantId: Scalars["ID"];
+};
+
+export type MutationDeleteReviewArgs = {
+  reviewId: Scalars["ID"];
+};
+
+export type MutationDeleteUserArgs = {
+  userId: Scalars["ID"];
 };
 
 export type MutationLoginArgs = {
@@ -67,6 +111,26 @@ export type MutationReviewRestaurantArgs = {
 
 export type MutationSignUpArgs = {
   input: SignUpInput;
+};
+
+export type MutationUpdateReplyArgs = {
+  input: UpdateReplyInput;
+  replyId: Scalars["ID"];
+};
+
+export type MutationUpdateRestaurantArgs = {
+  input: UpdateRestaurantInput;
+  restaurantId: Scalars["ID"];
+};
+
+export type MutationUpdateReviewArgs = {
+  input: UpdateReviewInput;
+  reviewId: Scalars["ID"];
+};
+
+export type MutationUpdateUserArgs = {
+  input: UpdateUserInput;
+  userId: Scalars["ID"];
 };
 
 export type Query = {
@@ -139,6 +203,32 @@ export type SignUpInput = {
 
 export type SignUpOutput = {
   __typename?: "SignUpOutput";
+  success: Scalars["Boolean"];
+};
+
+export type UpdateReplyInput = {
+  reply: Scalars["String"];
+};
+
+export type UpdateReplyOutput = {
+  __typename?: "UpdateReplyOutput";
+  success: Scalars["Boolean"];
+};
+
+export type UpdateRestaurantInput = {
+  name: Scalars["String"];
+};
+
+export type UpdateReviewInput = {
+  comment: Scalars["String"];
+};
+
+export type UpdateUserInput = {
+  name: Scalars["String"];
+};
+
+export type UpdateUserOutput = {
+  __typename?: "UpdateUserOutput";
   success: Scalars["Boolean"];
 };
 
@@ -262,6 +352,10 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   CreateRestaurantInput: CreateRestaurantInput;
   Date: ResolverTypeWrapper<Scalars["Date"]>;
+  DeleteReplyOutput: ResolverTypeWrapper<DeleteReplyOutput>;
+  DeleteRestaurantOutput: ResolverTypeWrapper<DeleteRestaurantOutput>;
+  DeleteReviewOutput: ResolverTypeWrapper<DeleteReviewOutput>;
+  DeleteUserOutput: ResolverTypeWrapper<DeleteUserOutput>;
   ID: ResolverTypeWrapper<Scalars["ID"]>;
   Int: ResolverTypeWrapper<Scalars["Int"]>;
   Mutation: ResolverTypeWrapper<{}>;
@@ -276,6 +370,12 @@ export type ResolversTypes = {
   SignUpInput: SignUpInput;
   SignUpOutput: ResolverTypeWrapper<SignUpOutput>;
   String: ResolverTypeWrapper<Scalars["String"]>;
+  UpdateReplyInput: UpdateReplyInput;
+  UpdateReplyOutput: ResolverTypeWrapper<UpdateReplyOutput>;
+  UpdateRestaurantInput: UpdateRestaurantInput;
+  UpdateReviewInput: UpdateReviewInput;
+  UpdateUserInput: UpdateUserInput;
+  UpdateUserOutput: ResolverTypeWrapper<UpdateUserOutput>;
   User: ResolverTypeWrapper<User>;
 };
 
@@ -285,6 +385,10 @@ export type ResolversParentTypes = {
   Boolean: Scalars["Boolean"];
   CreateRestaurantInput: CreateRestaurantInput;
   Date: Scalars["Date"];
+  DeleteReplyOutput: DeleteReplyOutput;
+  DeleteRestaurantOutput: DeleteRestaurantOutput;
+  DeleteReviewOutput: DeleteReviewOutput;
+  DeleteUserOutput: DeleteUserOutput;
   ID: Scalars["ID"];
   Int: Scalars["Int"];
   Mutation: {};
@@ -298,6 +402,12 @@ export type ResolversParentTypes = {
   SignUpInput: SignUpInput;
   SignUpOutput: SignUpOutput;
   String: Scalars["String"];
+  UpdateReplyInput: UpdateReplyInput;
+  UpdateReplyOutput: UpdateReplyOutput;
+  UpdateRestaurantInput: UpdateRestaurantInput;
+  UpdateReviewInput: UpdateReviewInput;
+  UpdateUserInput: UpdateUserInput;
+  UpdateUserOutput: UpdateUserOutput;
   User: User;
 };
 
@@ -314,6 +424,38 @@ export interface DateScalarConfig
   name: "Date";
 }
 
+export type DeleteReplyOutputResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes["DeleteReplyOutput"] = ResolversParentTypes["DeleteReplyOutput"]
+> = {
+  success?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type DeleteRestaurantOutputResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes["DeleteRestaurantOutput"] = ResolversParentTypes["DeleteRestaurantOutput"]
+> = {
+  success?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type DeleteReviewOutputResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes["DeleteReviewOutput"] = ResolversParentTypes["DeleteReviewOutput"]
+> = {
+  success?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type DeleteUserOutputResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes["DeleteUserOutput"] = ResolversParentTypes["DeleteUserOutput"]
+> = {
+  success?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type MutationResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
@@ -323,6 +465,30 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<MutationCreateRestaurantArgs, "input">
+  >;
+  deleteReply?: Resolver<
+    ResolversTypes["DeleteReplyOutput"],
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeleteReplyArgs, "replyId">
+  >;
+  deleteRestaurant?: Resolver<
+    ResolversTypes["DeleteRestaurantOutput"],
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeleteRestaurantArgs, "restaurantId">
+  >;
+  deleteReview?: Resolver<
+    ResolversTypes["DeleteReviewOutput"],
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeleteReviewArgs, "reviewId">
+  >;
+  deleteUser?: Resolver<
+    ResolversTypes["DeleteUserOutput"],
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeleteUserArgs, "userId">
   >;
   login?: Resolver<
     Maybe<ResolversTypes["AuthPayload"]>,
@@ -347,6 +513,30 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<MutationSignUpArgs, "input">
+  >;
+  updateReply?: Resolver<
+    ResolversTypes["UpdateReplyOutput"],
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdateReplyArgs, "input" | "replyId">
+  >;
+  updateRestaurant?: Resolver<
+    ResolversTypes["Restaurant"],
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdateRestaurantArgs, "input" | "restaurantId">
+  >;
+  updateReview?: Resolver<
+    ResolversTypes["Review"],
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdateReviewArgs, "input" | "reviewId">
+  >;
+  updateUser?: Resolver<
+    ResolversTypes["UpdateUserOutput"],
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdateUserArgs, "input" | "userId">
   >;
 };
 
@@ -418,6 +608,22 @@ export type SignUpOutputResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type UpdateReplyOutputResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes["UpdateReplyOutput"] = ResolversParentTypes["UpdateReplyOutput"]
+> = {
+  success?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type UpdateUserOutputResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes["UpdateUserOutput"] = ResolversParentTypes["UpdateUserOutput"]
+> = {
+  success?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type UserResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
@@ -437,6 +643,10 @@ export type UserResolvers<
 export type Resolvers<ContextType = Context> = {
   AuthPayload?: AuthPayloadResolvers<ContextType>;
   Date?: GraphQLScalarType;
+  DeleteReplyOutput?: DeleteReplyOutputResolvers<ContextType>;
+  DeleteRestaurantOutput?: DeleteRestaurantOutputResolvers<ContextType>;
+  DeleteReviewOutput?: DeleteReviewOutputResolvers<ContextType>;
+  DeleteUserOutput?: DeleteUserOutputResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   ReplyToReviewOutput?: ReplyToReviewOutputResolvers<ContextType>;
@@ -444,5 +654,7 @@ export type Resolvers<ContextType = Context> = {
   Review?: ReviewResolvers<ContextType>;
   ReviewRestaurantOutput?: ReviewRestaurantOutputResolvers<ContextType>;
   SignUpOutput?: SignUpOutputResolvers<ContextType>;
+  UpdateReplyOutput?: UpdateReplyOutputResolvers<ContextType>;
+  UpdateUserOutput?: UpdateUserOutputResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };

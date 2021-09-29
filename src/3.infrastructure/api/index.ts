@@ -10,10 +10,11 @@ import { queryResolvers } from "./resolvers/query";
 import { mutationResolvers } from "./resolvers/mutation";
 import { context } from "./context";
 import { userResolvers } from "./resolvers/user";
+import { adminMutationResolvers } from "./resolvers/adminMutationResolvers";
 
 const resolvers: Resolvers = {
   Query: queryResolvers,
-  Mutation: mutationResolvers,
+  Mutation: { ...mutationResolvers, ...adminMutationResolvers },
   User: userResolvers,
 };
 

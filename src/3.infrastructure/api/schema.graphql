@@ -10,6 +10,18 @@ type Mutation {
   createRestaurant(input: CreateRestaurantInput!): Restaurant!
   reviewRestaurant(input: ReviewRestaurantInput!): Review!
   replyToReview(input: ReplyToReviewInput!): ReplyToReviewOutput!
+  # Admin only for now
+  updateUser(userId: ID!, input: UpdateUserInput!): UpdateUserOutput!
+  deleteUser(userId: ID!): DeleteUserOutput!
+  updateRestaurant(
+    restaurantId: ID!
+    input: UpdateRestaurantInput!
+  ): Restaurant!
+  deleteRestaurant(restaurantId: ID!): DeleteRestaurantOutput!
+  updateReview(reviewId: ID!, input: UpdateReviewInput!): Review!
+  deleteReview(reviewId: ID!): DeleteReviewOutput!
+  updateReply(replyId: ID!, input: UpdateReplyInput!): UpdateReplyOutput!
+  deleteReply(replyId: ID!): DeleteReplyOutput!
 }
 
 # TODO use scalars for email and password
@@ -49,6 +61,48 @@ input ReplyToReviewInput {
 }
 
 type ReplyToReviewOutput {
+  success: Boolean!
+}
+
+input UpdateUserInput {
+  name: String!
+}
+
+type UpdateUserOutput {
+  success: Boolean!
+}
+
+type DeleteUserOutput {
+  success: Boolean!
+}
+
+input UpdateRestaurantInput {
+  name: String!
+}
+
+type DeleteRestaurantOutput {
+  success: Boolean!
+}
+
+input UpdateReviewInput {
+  # rating: Int!
+  comment: String!
+  # visitedAt: Date!
+}
+
+type DeleteReviewOutput {
+  success: Boolean!
+}
+
+input UpdateReplyInput {
+  reply: String!
+}
+
+type UpdateReplyOutput {
+  success: Boolean!
+}
+
+type DeleteReplyOutput {
   success: Boolean!
 }
 
